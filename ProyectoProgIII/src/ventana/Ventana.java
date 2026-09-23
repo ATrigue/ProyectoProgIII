@@ -8,11 +8,11 @@ public class Ventana extends JFrame{
 	
 	public Ventana() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(320, 240);
+		setSize(320, 240); //TAMAÑO PANTALLA
 		
-		setTitle("ProyectoIII");
+		setTitle("ProyectoIII"); //TITULO VENTANA
 		
-		setVisible(true);
+		setVisible(true); //SIEMPRE TRUE
 	}
 
 	public static void main(String[] args) {
