@@ -1,6 +1,9 @@
 package ventana;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
 
 public class Ventana extends JFrame{
 
@@ -8,16 +11,31 @@ public class Ventana extends JFrame{
 	
 	public Ventana() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(320, 240); //TAMAÑO PANTALLA
+		setSize(800, 600); //TAMAÑO PANTALLA
 		setLocationRelativeTo(null);
 		
-		setTitle("ProyectoIII"); //TITULO VENTANA
+		setTitle("Mediateca"); //TITULO VENTANA
+		
+        //PESTAÑAS
+        JTabbedPane panelPestanas = new JTabbedPane();
+        
+        panelPestanas.addTab("Inicio", VentanaInicio.crearPanelInicio());
+        panelPestanas.addTab("Peliculas", VentanaPelicula.crearPanelInicio());
+        panelPestanas.addTab("Series", VentanaSeries.crearPanelSeries());   
+        panelPestanas.addTab("Libros", VentanaSeries.crearPanelSeries());
+        panelPestanas.addTab("Música", VentanaSeries.crearPanelSeries());
+        panelPestanas.addTab("Audio", VentanaSeries.crearPanelSeries());
+        panelPestanas.addTab("Perfil", VentanaSeries.crearPanelSeries());
+        
+        add(panelPestanas, BorderLayout.NORTH);
 		
 		setVisible(true); //SIEMPRE TRUE
 	}
+	
+
 
 	public static void main(String[] args) {
-
+		new Ventana();
 	}
 
 }
