@@ -9,6 +9,7 @@ public class Ventana extends JFrame{
 	public Ventana() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(320, 240); //TAMAÑO PANTALLA
+		setLocationRelativeTo(null);
 		
 		setTitle("ProyectoIII"); //TITULO VENTANA
 		
