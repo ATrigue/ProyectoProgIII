@@ -1,4 +1,4 @@
-package ventana;
+package gui;
 
 import java.awt.BorderLayout;
 

@@ -1,4 +1,4 @@
-package ventana;
+package gui;
 
 import java.awt.BorderLayout;
 
@@ -27,15 +27,11 @@ public class Ventana extends JFrame{
         panelPestanas.addTab("Audio", VentanaSeries.crearPanelSeries());
         panelPestanas.addTab("Perfil", VentanaSeries.crearPanelSeries());
         
-        add(panelPestanas, BorderLayout.NORTH);
+        add(panelPestanas);
 		
 		setVisible(true); //SIEMPRE TRUE
 	}
 	
 
-
-	public static void main(String[] args) {
-		new Ventana();
-	}
 
 }
