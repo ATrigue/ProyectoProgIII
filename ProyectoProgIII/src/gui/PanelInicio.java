@@ -40,11 +40,9 @@ public class PanelInicio {
 		
 		// Apartado de contenidos añadidos recientemente
 		JPanel panelAnyadido = new JPanel( new BorderLayout( 10, 10 ) );
-		panelAnyadido.setBackground( Color.RED);
 		panelInicio.add( panelAnyadido );
 		
 		JPanel panelTituloAnya = new JPanel( new GridLayout( 1, 2, 5, 5 ) );
-		panelTituloAnya.setBackground( Color.GREEN );
 		panelAnyadido.add( panelTituloAnya, BorderLayout.NORTH );
 		
 		JLabel labelTituloAnya = new JLabel( "      Añadido recientemente", JLabel.LEFT );
@@ -55,7 +53,7 @@ public class PanelInicio {
 		
 		JPanel panelDatosAnya = new JPanel( new GridLayout( 1, 6, 5, 5 ) );
 		for ( int i = 0; i < 6; i ++ ) {
-			JLabel lb = new JLabel( datosPorFecha.removeFirst().getImgIcon() );
+			JLabel lb = new JLabel( datosPorFecha.removeFirst().getImgIcon() );		// TODO Averiguar por qué se escalan así las imágenes y arreglar
 			lb.setOpaque(true);
 			lb.setBackground( Color.pink );
 			panelDatosAnya.add(lb);

@@ -11,10 +11,12 @@ import domain.Contenido;
 public class Ventana extends JFrame{
 
 	private static final long serialVersionUID = 1L;
+	public static final int ALTURA = 600;
+	public static final int ANCHURA = 800;
 	
 	public Ventana( HashMap<Long, Contenido> mapaContenidos ) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(800, 600); //TAMAÑO PANTALLA
+		setSize(ANCHURA, ALTURA); //TAMAÑO PANTALLA
 		setLocationRelativeTo(null);
 		
 		setTitle("Mediateca"); //TITULO VENTANA

@@ -9,7 +9,7 @@ public class Contenido {
 	//  ~~~~~~ ATRIBUTOS ~~~~~~
 	
 	private long codIdent = 0;		// Código identificativo del contenido, como pueden ser el ISBN o el ISAN.
-	private ImageIcon imgIcon = new ImageIcon( "/resources/images/question-mark-transparent-grey-5.png" ); // Imagen default.
+	private ImageIcon imgIcon = new ImageIcon( "resources/images/question-mark-transparent-grey-5.png" ); // Imagen default.
 	private String titulo = "N/A";
 	private String autorDirector = "N/A";	// En película y serie guarda el director
 	private Genero genero;	// Se ignora en Música y se utiliza género musical en su lugar
