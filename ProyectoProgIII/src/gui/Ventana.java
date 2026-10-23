@@ -1,15 +1,18 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+
+import domain.Contenido;
 
 public class Ventana extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	
-	public Ventana() {
+	public Ventana( HashMap<Long, Contenido> mapaContenidos ) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800, 600); //TAMAÑO PANTALLA
 		setLocationRelativeTo(null);
@@ -19,7 +22,7 @@ public class Ventana extends JFrame{
         //PESTAÑAS
         JTabbedPane panelPestanas = new JTabbedPane();
         
-        panelPestanas.addTab("Inicio", PanelInicio.crearPanelInicio());
+        panelPestanas.addTab("Inicio", PanelInicio.crearPanelInicio( mapaContenidos ));
         panelPestanas.addTab("Peliculas", PanelPelicula.crearPanelInicio());
         panelPestanas.addTab("Series", PanelSeries.crearPanelSeries());   
         panelPestanas.addTab("Libros", PanelLibros.crearPanelLibros());

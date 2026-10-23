@@ -2,32 +2,36 @@ package domain;
 
 import java.time.LocalDate;
 
+import javax.swing.ImageIcon;
+
 public class Contenido {
 
 	//  ~~~~~~ ATRIBUTOS ~~~~~~
 	
-	// FALTA UN ATRIBUTO PARA LA IMAGEN
 	private long codIdent = 0;		// Código identificativo del contenido, como pueden ser el ISBN o el ISAN.
+	private ImageIcon imgIcon = new ImageIcon( "/resources/images/question-mark-transparent-grey-5.png" ); // Imagen default.
 	private String titulo = "N/A";
 	private String autorDirector = "N/A";	// En película y serie guarda el director
 	private Genero genero;	// Se ignora en Música y se utiliza género musical en su lugar
 	private Idioma idioma;
 	private LocalDate fechaPub;
 	private int duracion; 	// Se ignora en Libro 	
+	private LocalDate fechaAnya; // Fecha en la que se añadió a la cuenta.
 	
 	
 	
 	
 	// ~~~~~~ CONSTRUCTOR ~~~~~~
 	
-	public Contenido(long codIdent, String titulo, String autor, Genero genero, Idioma idioma, LocalDate fechaPub, int duracion) {
+	public Contenido(long codIdent, String titulo, String autorDirector, Genero genero, Idioma idioma, LocalDate fechaPub, int duracion) {
 		setCodIdent(codIdent);
 		setTitulo(titulo);
-		setAutor(autor);
+		setAutorDirector(autorDirector);
 		setGenero(genero);
 		setIdioma(idioma);
 		setFechaPub(fechaPub);
 		setDuracion(duracion);
+		fechaAnya = LocalDate.now();
 	}	
 	
 	
@@ -41,17 +45,23 @@ public class Contenido {
 	public void setCodIdent(long codIdent) {
 		this.codIdent = codIdent;
 	}
+	public ImageIcon getImgIcon() {
+		return imgIcon;
+	}
+	public void setImgIcon(ImageIcon imgIcon) {
+		this.imgIcon = imgIcon;
+	}
 	public String getTitulo() {
 		return titulo;
 	}
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	public String getAutor() {
+	public String getAutorDirector() {
 		return autorDirector;
 	}
-	public void setAutor(String autor) {
-		this.autorDirector = autor;
+	public void setAutorDirector(String autorDirector) {
+		this.autorDirector = autorDirector;
 	}
 	public Genero getGenero() {
 		return genero;
@@ -77,16 +87,18 @@ public class Contenido {
 	public void setDuracion(int duracion) {
 		this.duracion = duracion;
 	}
+	public LocalDate getFechaAnya() {
+		return fechaAnya;
+	}
 
 	
 	
 	// ~~~~~~ TOSTRING Y EQUALS ~~~~~~
 	
 	
-
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": codIdent=" + codIdent + ", titulo=" + titulo + ", genero=" + genero + ", idioma=" + idioma + ", fechaPub=" + fechaPub;
+		return this.getClass().getSimpleName() + ": codIdent=" + codIdent + ", titulo=" + titulo + ", genero=" + genero + ", idioma=" + idioma + ", fechaPub=" + fechaPub + ", fechaAnya=" + fechaAnya;
 	}
 		
 		
