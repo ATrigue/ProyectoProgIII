@@ -1,0 +1,15 @@
+package gui;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+
+public class PanelPerfil {
+
+	static JPanel crearPanelPerfil() {
+		
+		JPanel panelPerfil = new JPanel(new BorderLayout());
+		
+		return panelPerfil;
+	}
+}
