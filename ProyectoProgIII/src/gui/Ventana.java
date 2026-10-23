@@ -19,13 +19,13 @@ public class Ventana extends JFrame{
         //PESTAÑAS
         JTabbedPane panelPestanas = new JTabbedPane();
         
-        panelPestanas.addTab("Inicio", VentanaInicio.crearPanelInicio());
-        panelPestanas.addTab("Peliculas", VentanaPelicula.crearPanelInicio());
-        panelPestanas.addTab("Series", VentanaSeries.crearPanelSeries());   
-        panelPestanas.addTab("Libros", VentanaSeries.crearPanelSeries());
-        panelPestanas.addTab("Música", VentanaSeries.crearPanelSeries());
-        panelPestanas.addTab("Audio", VentanaSeries.crearPanelSeries());
-        panelPestanas.addTab("Perfil", VentanaSeries.crearPanelSeries());
+        panelPestanas.addTab("Inicio", PanelInicio.crearPanelInicio());
+        panelPestanas.addTab("Peliculas", PanelPelicula.crearPanelInicio());
+        panelPestanas.addTab("Series", PanelSeries.crearPanelSeries());   
+        panelPestanas.addTab("Libros", PanelSeries.crearPanelSeries());
+        panelPestanas.addTab("Música", PanelSeries.crearPanelSeries());
+        panelPestanas.addTab("Audio", PanelSeries.crearPanelSeries());
+        panelPestanas.addTab("Perfil", PanelSeries.crearPanelSeries());
         
         add(panelPestanas);
 		
