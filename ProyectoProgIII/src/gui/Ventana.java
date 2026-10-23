@@ -22,10 +22,10 @@ public class Ventana extends JFrame{
         panelPestanas.addTab("Inicio", PanelInicio.crearPanelInicio());
         panelPestanas.addTab("Peliculas", PanelPelicula.crearPanelInicio());
         panelPestanas.addTab("Series", PanelSeries.crearPanelSeries());   
-        panelPestanas.addTab("Libros", PanelSeries.crearPanelSeries());
-        panelPestanas.addTab("Música", PanelSeries.crearPanelSeries());
-        panelPestanas.addTab("Audio", PanelSeries.crearPanelSeries());
-        panelPestanas.addTab("Perfil", PanelSeries.crearPanelSeries());
+        panelPestanas.addTab("Libros", PanelLibros.crearPanelLibros());
+        panelPestanas.addTab("Música", PanelMusica.crearPanelMusica());
+        panelPestanas.addTab("Audio", PanelAudio.crearPanelAudio());
+        panelPestanas.addTab("Perfil", PanelPerfil.crearPanelPerfil());
         
         add(panelPestanas);
 		
