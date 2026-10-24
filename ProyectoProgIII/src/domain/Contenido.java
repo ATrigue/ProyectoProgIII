@@ -17,6 +17,7 @@ public class Contenido {
 	private LocalDate fechaPub;
 	private int duracion; 	// Se ignora en Libro 	
 	private LocalDate fechaAnya; // Fecha en la que se añadió a la cuenta.
+	private float calif = 0;	// Calificación media
 	
 	
 	
@@ -98,12 +99,26 @@ public class Contenido {
 	public LocalDate getFechaAnya() {
 		return fechaAnya;
 	}
+	public float getCalif() {
+		return calif;
+	}
+	public void setCalif(float calif) {
+		if ( calif > 0 && calif <= 5) {
+			this.calif = calif;
+		}
+		
+	}
 
 	
 	
 	// ~~~~~~ TOSTRING Y EQUALS ~~~~~~
 	
 	
+	
+
+
+
+
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName() + ": codIdent=" + codIdent + ", titulo=" + titulo + ", genero=" + genero + ", idioma=" + idioma + ", fechaPub=" + fechaPub + ", fechaAnya=" + fechaAnya;
