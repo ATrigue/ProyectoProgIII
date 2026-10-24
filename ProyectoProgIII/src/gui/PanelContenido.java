@@ -1,5 +1,9 @@
 package gui;
 
-public class PanelContenido {
+public abstract class PanelContenido {
 
+	public PanelContenido() {
+		
+	}
+	
 }
