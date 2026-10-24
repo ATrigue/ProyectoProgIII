@@ -1,17 +1,21 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import domain.Contenido;
+import domain.Musica;
 
 public class VentanaMostrarContenido extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -29,28 +33,39 @@ public class VentanaMostrarContenido extends JFrame {
 		
 		setTitle("Editar contenido"); //TITULO VENTANA
 		
+		//Tabla de detalles que aparece al clickar en la portada de un contenido
 		ModeloTabla modelo = new ModeloTabla();
 		
+		setLayout(new BorderLayout());
+		
 		JTable tabla = new JTable(modelo);
-		
 		JScrollPane scrollPane = new JScrollPane(tabla);
-		scrollPane.setBackground(Color.RED);
+		scrollPane.setPreferredSize(new Dimension(scrollPane.getPreferredSize().width, 150)); //Limita el tamaño vertical del scrollpane
 		
-		add(scrollPane);
+		JPanel panelDetalles = new JPanel(new BorderLayout(5, 5));
+		panelDetalles.add(scrollPane, BorderLayout.NORTH);
 		
+		//Imágenes de portada
+		ImageIcon img = cont.getImgIcon();
+		Image imgEs = img.getImage().getScaledInstance(250, 350, Image.SCALE_SMOOTH); //Escala las portadas
+		ImageIcon imgDatosEscalada = new ImageIcon(imgEs);
+		JLabel portada = new JLabel(imgDatosEscalada);
+		
+		panelDetalles.add(portada);
+		add(panelDetalles, BorderLayout.CENTER); 
+		
+		//Botón para volver
 		JPanel panelBoton = new JPanel();
 		JButton botonVolver = new JButton("Volver");
 		
 		botonVolver.addActionListener(new ActionListener() {   //Cierra la ventana actual
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				dispose();
 			}
 		});
 		
 		panelBoton.add(botonVolver);
-		
 		add(panelBoton, BorderLayout.SOUTH);
 		
 		setVisible(true); //SIEMPRE TRUE
@@ -62,19 +77,16 @@ public class VentanaMostrarContenido extends JFrame {
 		
 		@Override
 		public int getRowCount() {
-			// TODO Auto-generated method stub
 			return 8;
 		}
 
 		@Override
 		public int getColumnCount() {
-			// TODO Auto-generated method stub
 			return 2;
 		}
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			// TODO Auto-generated method stub
 			if (columnIndex == 0) {
 	            if (rowIndex == 0) 
 	            	return "Código Identificativo";
@@ -98,8 +110,14 @@ public class VentanaMostrarContenido extends JFrame {
 	            	return c.getTitulo();
 	            else if (rowIndex == 2)
 	            	return c.getAutorDirector();
-	            else if (rowIndex == 3) 
-	            	return c.getGenero();
+	            else if (rowIndex == 3) {
+	            	if (c instanceof Musica) {
+	            		Musica m = (Musica) c;
+	            		return m.getGenMus();    // HACE QUE EN EL CASO DE QUE SEA MUSICA, DIGA EL GENERO, SI NO SALÍA COMO NULL
+	            	} else {
+	            		return c.getGenero();
+	            	}
+	            }
 	            else if (rowIndex == 4) 
 	            	return c.getIdioma();
 	            else if (rowIndex == 5) 
