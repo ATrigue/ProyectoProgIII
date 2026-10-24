@@ -12,7 +12,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -130,7 +129,7 @@ public class PanelInicio {
 		String autor = (cont.getAutorDirector() != null) ? cont.getAutorDirector() : "N/A";
 
 		// PORTADA
-		ImageIcon img = new ImageIcon( "resources/images/question-mark-transparent-grey-5.png" );
+		ImageIcon img = cont.getImgIcon();
 		Image imgEs = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH );
 		ImageIcon imgDatosEscalada = new ImageIcon( imgEs );
 		JLabel portada = new JLabel( imgDatosEscalada );
