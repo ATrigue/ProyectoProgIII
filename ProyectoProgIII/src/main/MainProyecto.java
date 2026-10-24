@@ -34,12 +34,16 @@ public class MainProyecto {
 		// Libros
 		Libro l1 = new Libro(9781401308773L, "Dead Poets Society", "N.H. Kleinbaum", Genero.DRAMA, Idioma.INGLES, LocalDate.of(1989, 1, 1), "Hyperion", 166);
 		Libro l2 = new Libro(34, "bap", "bip", null, null, LocalDate.of(1999, 2, 6), null, 0);
+		l1.setContUser(10);
+		l2.setContUser(32);
 		mapaContenidos.put(l1.getCodIdent(), l1);
 		mapaContenidos.put(l2.getCodIdent(), l2);
 		
 		// Películas
 		Pelicula p1 = new Pelicula(56, "La Bola Negra", "Los Javis", null, Idioma.CASTELLANO, LocalDate.of(2000, 4, 1), 150, null);
 		Pelicula p2 = new Pelicula(54, "Tomates Verdes Fritos", null, null, null, LocalDate.of(2000, 11, 1), 0, null);
+		p1.setContUser(1937);
+		p2.setContUser(20);
 		mapaContenidos.put(p1.getCodIdent(), p1);
 		mapaContenidos.put(p2.getCodIdent(), p2);
 		
@@ -61,6 +65,7 @@ public class MainProyecto {
 		// Audio
 		Audio a1 = new Audio(7, "The Magnus Archives", "Jonathan Sims", Genero.TERROR, Idioma.INGLES, LocalDate.of(2017, 9, 1), 5000);
 		Audio a2 = new Audio(8, "The Magnus Protocol", "Jonathan Sims & Alexander J. Newall", Genero.TERROR, Idioma.INGLES, LocalDate.of(2025, 10, 1), 1710);
+		a1.setContUser(58);
 		mapaContenidos.put(a1.getCodIdent(), a1);
 		mapaContenidos.put(a2.getCodIdent(), a2);
 

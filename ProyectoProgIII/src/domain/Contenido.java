@@ -18,6 +18,7 @@ public class Contenido {
 	private int duracion; 	// Se ignora en Libro 	
 	private LocalDate fechaAnya; // Fecha en la que se añadió a la cuenta.
 	private float calif = 0;	// Calificación media
+	private int contUser = 0;	// Indica cuántos usuarios lo han añadido a su bilioteca virtual.
 	
 	
 	
@@ -106,19 +107,24 @@ public class Contenido {
 		if ( calif > 0 && calif <= 5) {
 			this.calif = calif;
 		}
-		
+	}
+	public int getContUser() {
+		return contUser;
+	}
+	public void setContUser( int contUser ) {
+		this.contUser = contUser;
+	}
+	public void incrementaContUser() {
+		this.contUser++;
+	}
+	public void decrementaContUser() {
+		this.contUser--;
 	}
 
 	
 	
 	// ~~~~~~ TOSTRING Y EQUALS ~~~~~~
 	
-	
-	
-
-
-
-
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName() + ": codIdent=" + codIdent + ", titulo=" + titulo + ", genero=" + genero + ", idioma=" + idioma + ", fechaPub=" + fechaPub + ", fechaAnya=" + fechaAnya;
