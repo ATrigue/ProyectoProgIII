@@ -30,36 +30,48 @@ public class PanelInicio {
 
 		
 		// Apartado de contenidos añadidos recientemente
-		JPanel panelAnyadido = new JPanel( );
+		JPanel panelAnyadido = new JPanel( new BorderLayout(0, 15) );
 		panelInicio.add( panelAnyadido );
 		
-		JPanel panelTituloAnya = new JPanel( new GridLayout( 1, 2, 5, 5 ) );	// Panel para la cabecera del apartado
-		panelAnyadido.add( panelTituloAnya );
+		JPanel panelTituloAnyadido = new JPanel( new GridLayout( 1, 2, 5, 5 ) );	// Panel para la cabecera del apartado
+		panelAnyadido.add( panelTituloAnyadido, BorderLayout.NORTH );
 		
-		JLabel labelTituloAnya = new JLabel( "Añadido recientemente", JLabel.LEFT );
-		panelTituloAnya.add( labelTituloAnya );
-		JLabel labelMasAnya = new JLabel( "Ver más", JLabel.RIGHT );
-		labelMasAnya.setForeground( Color.BLUE );
-		panelTituloAnya.add( labelMasAnya );
+		JLabel labelTituloAnyadido = new JLabel( "Añadido recientemente", JLabel.LEFT );
+		panelTituloAnyadido.add( labelTituloAnyadido );
+		JLabel labelMasAnyadido = new JLabel( "Ver más", JLabel.RIGHT );
+		labelMasAnyadido.setForeground( Color.BLUE );
+		panelTituloAnyadido.add( labelMasAnyadido );
 		
-		JPanel panelDatosAnya = new JPanel( new GridLayout( 1, 6, 5, 5 ) );		// Panel para los contenidos del apartado
-		panelDatosAnya.setBorder( BorderFactory.createEmptyBorder( 10, 15, 10, 15 ));
+		JPanel panelDatosAnyadido = new JPanel( new GridLayout( 1, 6, 5, 5 ) );		// Panel para los contenidos del apartado
+		panelDatosAnyadido.setBorder( BorderFactory.createEmptyBorder( 10, 15, 10, 15 ));
 		for ( int i = 0; i < 6; i ++ ) {
-//			JLabel lb = new JLabel( ordenarPorFechaAnya(mapaContenidos).removeFirst().getImgIcon() );		// TODO Averiguar por qué se escalan así las imágenes y arreglar
-//			lb.setOpaque(true);
-//			panelDatosAnya.add(lb);
 			JPanel tarjeta = crearTarjeta( ordenarPorFechaAnya(mapaContenidos).removeFirst() );
-			panelDatosAnya.add( tarjeta );
+			panelDatosAnyadido.add( tarjeta );
 		}
-		panelAnyadido.add(panelDatosAnya);		
+		panelAnyadido.add(panelDatosAnyadido);		
 				
 		
 		// Apartado de contenidos populares en este momento (tendencia)
-		JPanel panelTendencia = new JPanel( );
-		panelTendencia.setBackground( Color.BLUE);
+		JPanel panelTendencia = new JPanel( new BorderLayout(0, 15) );
 		panelInicio.add( panelTendencia );
 		
-		JPanel panelTituloTend = new JPanel();
+		JPanel panelTituloTend = new JPanel( new GridLayout( 1, 2, 5, 5 ) );
+		panelTendencia.add( panelTituloTend, BorderLayout.NORTH );
+		
+		JLabel labelTituloTend = new JLabel( "Tendencia", JLabel.LEFT );
+		panelTituloTend.add( labelTituloTend );
+		JLabel labelMasTend = new JLabel( "Ver más", JLabel.RIGHT );
+		labelMasTend.setForeground( Color.BLUE );
+		panelTituloTend.add( labelMasTend );
+		
+		JPanel panelDatosTend = new JPanel( new GridLayout( 1, 6, 5, 5 ) );		// Panel para los contenidos del apartado
+		panelDatosTend.setBorder( BorderFactory.createEmptyBorder( 10, 15, 10, 15 ));
+		 ArrayList<Contenido> contenidosPorTend = ordenarPorTendencia(mapaContenidos);
+		for ( int i = 0; i < 6; i ++ ) {
+			JPanel tarjeta = crearTarjeta( contenidosPorTend.removeFirst() );
+			panelDatosTend.add( tarjeta );
+		}
+		panelTendencia.add(panelDatosTend);	
 		
 		return panelInicio;
 		
@@ -81,6 +93,30 @@ public class PanelInicio {
 			}
 		});
 		return datosPorFecha;
+		
+	}
+	
+	private static ArrayList<Contenido> ordenarPorTendencia( HashMap<Long, Contenido> mapaContenidos ) {
+		
+		// Ordenar datos por fecha añadido
+		ArrayList<Contenido> datosPorTendencia = new ArrayList<Contenido>();
+		for ( long cod : mapaContenidos.keySet() ) {
+			datosPorTendencia.add( mapaContenidos.get(cod) );
+		}
+				
+		datosPorTendencia.sort( new Comparator<Contenido>( ) {	// Ordena la lista de manera que esté ordenada por la fecha en la que se añadió el contenido.
+			@Override
+			public int compare(Contenido o1, Contenido o2) {
+				if ( o1.getContUser() > o2 .getContUser() ) {
+					return -1;
+				}
+				else if ( o1.getContUser() < o2 .getContUser() ) {
+					return 1;
+				}
+				return 0;
+			}
+		});
+		return datosPorTendencia;
 		
 	}
 	
