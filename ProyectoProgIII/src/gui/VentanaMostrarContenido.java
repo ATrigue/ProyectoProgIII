@@ -14,12 +14,12 @@ import javax.swing.table.AbstractTableModel;
 
 import domain.Contenido;
 
-public class VentanaEditarContenido extends JFrame {
+public class VentanaMostrarContenido extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public static final int ALTURA = 600;
 	public static final int ANCHURA = 800;
 	
-	public VentanaEditarContenido(HashMap<Long, Contenido> mapaContenidos) {
+	public VentanaMostrarContenido(HashMap<Long, Contenido> mapaContenidos) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(ANCHURA, ALTURA); //TAMAÑO PANTALLA
 		setLocationRelativeTo(null);
