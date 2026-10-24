@@ -1,10 +1,9 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,8 +18,12 @@ public class VentanaMostrarContenido extends JFrame {
 	public static final int ALTURA = 600;
 	public static final int ANCHURA = 800;
 	
+	private Contenido c;
+	
 	public VentanaMostrarContenido(Contenido cont) {
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.c = cont;
+		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(ANCHURA, ALTURA); //TAMAÑO PANTALLA
 		setLocationRelativeTo(null);
 		
@@ -31,14 +34,14 @@ public class VentanaMostrarContenido extends JFrame {
 		JTable tabla = new JTable(modelo);
 		
 		JScrollPane scrollPane = new JScrollPane(tabla);
+		scrollPane.setBackground(Color.RED);
 		
-		add(scrollPane, BorderLayout.NORTH);
+		add(scrollPane);
 		
-		/*JPanel panelGuardado = new JPanel();
-		JButton botonGuardar = new JButton("Guardar");
-		JButton botonCancelar = new JButton("Cancelar");
+		JPanel panelBoton = new JPanel();
+		JButton botonVolver = new JButton("Volver");
 		
-		botonCancelar.addActionListener(new ActionListener() {   //Cancelar cierra la ventana actual
+		botonVolver.addActionListener(new ActionListener() {   //Cierra la ventana actual
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -46,10 +49,9 @@ public class VentanaMostrarContenido extends JFrame {
 			}
 		});
 		
-		panelGuardado.add(botonGuardar);
-		panelGuardado.add(botonCancelar);
+		panelBoton.add(botonVolver);
 		
-		add(panelGuardado, BorderLayout.SOUTH);*/
+		add(panelBoton, BorderLayout.SOUTH);
 		
 		setVisible(true); //SIEMPRE TRUE
 	}
@@ -90,7 +92,21 @@ public class VentanaMostrarContenido extends JFrame {
 	            	return "Duración";
 	            else return "Fecha de Añadido";
 			} else {
-				return "";
+				if (rowIndex == 0) 
+	            	return c.getCodIdent();
+	            else if (rowIndex == 1) 
+	            	return c.getTitulo();
+	            else if (rowIndex == 2)
+	            	return c.getAutorDirector();
+	            else if (rowIndex == 3) 
+	            	return c.getGenero();
+	            else if (rowIndex == 4) 
+	            	return c.getIdioma();
+	            else if (rowIndex == 5) 
+	            	return c.getFechaPub();
+	            else if (rowIndex == 6) 
+	            	return c.getDuracion();
+	            else return c.getFechaAnya();
 			}
 		
 		}
