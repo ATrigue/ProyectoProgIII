@@ -55,12 +55,20 @@ public class Contenido {
 		return titulo;
 	}
 	public void setTitulo(String titulo) {
+		if ( titulo == null ) {
+			this.titulo = "N/A";
+			return;
+		}
 		this.titulo = titulo;
 	}
 	public String getAutorDirector() {
 		return autorDirector;
 	}
 	public void setAutorDirector(String autorDirector) {
+		if ( autorDirector == null ) {
+			this.autorDirector = "N/A";
+			return;
+		}
 		this.autorDirector = autorDirector;
 	}
 	public Genero getGenero() {
