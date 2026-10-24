@@ -64,9 +64,15 @@ public class MainProyecto {
 		// Música
 		Musica m1 = new Musica(05, "Ferragamo", "Trigue", GeneroMusical.TRAP, Idioma.CASTELLANO, LocalDate.of(2000, 7, 1), 0);
 		Musica m2 = new Musica(06, "laaaaalalalalalaaaalaaaaaaaa", "Oprheus", GeneroMusical.CLASICA, Idioma.INGLES, LocalDate.of(2016, 5, 6), 4);
+		Musica m3 = new Musica(9, "La Nieve", "Guitarricadelafuente", GeneroMusical.CLASICA, Idioma.CASTELLANO, LocalDate.of(2026, 9, 18), 0);
 
+		m1.setImgIcon(new ImageIcon("resources/images/ferragamo.jpeg"));
+		m3.setImgIcon(new ImageIcon("resources/images/la_nieve.jpeg"));
+		
 		mapaContenidos.put(m1.getCodIdent(), m1);
 		mapaContenidos.put(m2.getCodIdent(), m2);
+		mapaContenidos.put(m3.getCodIdent(), m3);
+
 
 		// Audio
 		Audio a1 = new Audio(7, "The Magnus Archives", "Jonathan Sims", Genero.TERROR, Idioma.INGLES, LocalDate.of(2016, 3, 24), 5000);

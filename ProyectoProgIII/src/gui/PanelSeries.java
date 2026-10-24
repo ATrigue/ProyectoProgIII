@@ -1,16 +1,15 @@
 package gui;
 
-import java.awt.BorderLayout;
+import java.util.HashMap;
 
-import javax.swing.JPanel;
+import domain.Contenido;
+import domain.Serie;
 
-public class PanelSeries {
-	
-	static JPanel crearPanelSeries() {
-			
-		JPanel panelSeries = new JPanel(new BorderLayout());
-		
-		return panelSeries;
-		
+public class PanelSeries extends PanelContenido {
+
+	private static final long serialVersionUID = 1L;
+
+	public PanelSeries(HashMap<Long, Contenido> mapa) {
+		super(mapa, Serie.class, "Series populares esta semana");
 	}
 }
