@@ -44,8 +44,9 @@ public class PanelInicio {
 		
 		JPanel panelDatosAnyadido = new JPanel( new GridLayout( 1, 6, 5, 5 ) );		// Panel para los contenidos del apartado
 		panelDatosAnyadido.setBorder( BorderFactory.createEmptyBorder( 10, 15, 10, 15 ));
+		ArrayList<Contenido> contenidosPorFechaAnyadido = ordenarPorFechaAnya(mapaContenidos);
 		for ( int i = 0; i < 6; i ++ ) {
-			JPanel tarjeta = crearTarjeta( ordenarPorFechaAnya(mapaContenidos).removeFirst() );
+			JPanel tarjeta = crearTarjeta( contenidosPorFechaAnyadido.removeFirst() );
 			panelDatosAnyadido.add( tarjeta );
 		}
 		panelAnyadido.add(panelDatosAnyadido);		
