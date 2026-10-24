@@ -19,7 +19,7 @@ public class VentanaMostrarContenido extends JFrame {
 	public static final int ALTURA = 600;
 	public static final int ANCHURA = 800;
 	
-	public VentanaMostrarContenido(HashMap<Long, Contenido> mapaContenidos) {
+	public VentanaMostrarContenido(Contenido cont) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(ANCHURA, ALTURA); //TAMAÑO PANTALLA
 		setLocationRelativeTo(null);
@@ -34,7 +34,7 @@ public class VentanaMostrarContenido extends JFrame {
 		
 		add(scrollPane, BorderLayout.NORTH);
 		
-		JPanel panelGuardado = new JPanel();
+		/*JPanel panelGuardado = new JPanel();
 		JButton botonGuardar = new JButton("Guardar");
 		JButton botonCancelar = new JButton("Cancelar");
 		
@@ -49,7 +49,7 @@ public class VentanaMostrarContenido extends JFrame {
 		panelGuardado.add(botonGuardar);
 		panelGuardado.add(botonCancelar);
 		
-		add(panelGuardado, BorderLayout.SOUTH);
+		add(panelGuardado, BorderLayout.SOUTH);*/
 		
 		setVisible(true); //SIEMPRE TRUE
 	}

@@ -5,12 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.time.LocalDate;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.TreeMap;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import domain.Contenido;
-import domain.Musica;
 
 public class PanelInicio {
 	
@@ -135,6 +133,12 @@ public class PanelInicio {
 		Image imgEs = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH );
 		ImageIcon imgDatosEscalada = new ImageIcon( imgEs );
 		JLabel portada = new JLabel( imgDatosEscalada );
+		
+		portada.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				new VentanaMostrarContenido(cont);
+			}
+		});
 		tarjeta.add(portada, BorderLayout.CENTER);
 
 		// TITULO Y AUTOR (SI NO CABEN LOS ACORTA CON "..."
