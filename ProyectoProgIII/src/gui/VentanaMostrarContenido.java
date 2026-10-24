@@ -12,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import domain.Contenido;
-import domain.Musica;
 
 public class VentanaMostrarContenido extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -99,14 +98,8 @@ public class VentanaMostrarContenido extends JFrame {
 	            	return c.getTitulo();
 	            else if (rowIndex == 2)
 	            	return c.getAutorDirector();
-	            else if (rowIndex == 3) {
-	            	if (c instanceof Musica) {
-	            		Musica m = (Musica) c;
-	            		return m.getGenMus();    // HACE QUE EN EL CASO DE QUE SEA MUSICA, DIGA EL GENERO, SI NO SALÍA COMO NULL
-	            	} else {
-	            		return c.getGenero();
-	            	}
-	            }
+	            else if (rowIndex == 3) 
+	            	return c.getGenero();
 	            else if (rowIndex == 4) 
 	            	return c.getIdioma();
 	            else if (rowIndex == 5) 

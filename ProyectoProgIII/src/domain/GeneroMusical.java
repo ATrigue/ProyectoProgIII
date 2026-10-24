@@ -1,5 +1,5 @@
 package domain;
 
 public enum GeneroMusical {
-	ROCK, POP, CLASICA, METAL, JAZZ, TRAP, ACUSTICA
+	ROCK, POP, CLASICA, METAL, JAZZ, TRAP
 }

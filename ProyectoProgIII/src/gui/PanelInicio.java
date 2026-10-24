@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -135,7 +134,6 @@ public class PanelInicio {
 		ImageIcon imgDatosEscalada = new ImageIcon( imgEs );
 		JLabel portada = new JLabel( imgDatosEscalada );
 		
-		portada.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );	// MANITO AL PASAR EL RATON POR ENCIMA
 		portada.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				new VentanaMostrarContenido(cont);
