@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -23,6 +22,8 @@ public class Ventana extends JFrame{
 		
         //PESTAÑAS
         JTabbedPane panelPestanas = new JTabbedPane();
+        
+        PanelMusica.setMapaContenidos(mapaContenidos);
         
         panelPestanas.addTab("Inicio", PanelInicio.crearPanelInicio( mapaContenidos ));
         panelPestanas.addTab("Peliculas", PanelPelicula.crearPanelInicio());

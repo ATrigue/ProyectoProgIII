@@ -6,6 +6,7 @@ import java.util.HashMap;
 import domain.Audio;
 import domain.Contenido;
 import domain.Genero;
+import domain.GeneroMusical;
 import domain.Idioma;
 import domain.Libro;
 import domain.Musica;
@@ -49,11 +50,14 @@ public class MainProyecto {
 		mapaContenidos.put(s2.getCodIdent(), s2);
 		
 		// Música
-		Musica m1 = new Musica(05, "laaaaalalalalalalaaaaa", null, null, null, LocalDate.of(2000, 7, 1), 0);
+		Musica m1 = new Musica(05, "Ferragamo", "Trigue", GeneroMusical.TRAP, Idioma.CASTELLANO, LocalDate.of(2000, 7, 1), 0);
 		Musica m2 = new Musica(06, "laaaaalalalalalaaaalaaaaaaaa", null, null, null, LocalDate.of(2000, 8, 1), 0);
+		Musica m3 = new Musica(06, "laaaaalalalalalaaaalaaaaaaaa", null, null, null, LocalDate.of(2000, 8, 1), 0);
+
 		mapaContenidos.put(m1.getCodIdent(), m1);
 		mapaContenidos.put(m2.getCodIdent(), m2);
-		
+		mapaContenidos.put(m3.getCodIdent(), m3);
+
 		// Audio
 		Audio a1 = new Audio(7, "The Magnus Archives", "Jonathan Sims", Genero.TERROR, Idioma.INGLES, LocalDate.of(2017, 9, 1), 5000);
 		Audio a2 = new Audio(8, "The Magnus Protocol", "Jonathan Sims & Alexander J. Newall", Genero.TERROR, Idioma.INGLES, LocalDate.of(2025, 10, 1), 1710);
