@@ -8,7 +8,7 @@ public class Usuario {
 	private String nomUsuario;  //Nombre de usuario del usuario
 	private ImageIcon fotoPerfil;   //Foto de perfil que desee poner el usuario
 	private String descripcion;   //Descripcion de su perfil
-	private ArrayList<Usuario> listaAmigos;   //Lista de amigos del usuario
+	private ArrayList<Usuario> listaAmigos = new ArrayList<Usuario>();   //Lista de amigos del usuario
 	private ArrayList<Contenido> listaContenido;  //Lista de series, peliculas, libros, musica o audio del usuario
 	
 	

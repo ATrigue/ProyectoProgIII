@@ -40,7 +40,10 @@ public class VentanaEditarPerfil extends JDialog{
 	private JButton modDesc;
 	private JButton modImg;
 	
+	private JButton botonContenidoFav;
+	
 	private JButton guardaryCerrar;
+	private JButton cancelar;
 	private boolean guardado = false;  //inicializo el guardado de los datos a falso
 	
 	public VentanaEditarPerfil(Frame parent, boolean modal) {
@@ -97,11 +100,12 @@ public class VentanaEditarPerfil extends JDialog{
 		
 		
 		//----CAMBIO LOS CONTENIDOS FAVORITOS
-		JPanel panelSur = new JPanel(new BorderLayout(10, 10));
+		JPanel panelSur = new JPanel(new GridLayout(1, 5, 10, 0));
+		
 		
 		
 		//----CREO EL BOTON DE GUARDAR LOS DATOS Y CERRAR LA PESTAÑA-----------------------------------------------------------------------
-		JPanel panelGuardar = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel panelGuardarCancelar = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		guardaryCerrar = new JButton("Guardar");
 		guardaryCerrar.addActionListener(new ActionListener() {
 			
@@ -111,8 +115,19 @@ public class VentanaEditarPerfil extends JDialog{
 				dispose();
 			}
 		});
-		panelGuardar.add(guardaryCerrar);
+		panelGuardarCancelar.add(guardaryCerrar);
 		
+		
+		//----BOTON CANCELAR
+		cancelar = new JButton("Cancelar");
+		cancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				
+			}
+		});
+		panelGuardarCancelar.add(cancelar);
 		
 		
 		//----AÑADO TODO EN LA VENTANA--------------------------------------------------------------------------------
@@ -124,7 +139,7 @@ public class VentanaEditarPerfil extends JDialog{
 		panelEditar.add(labelEditar, BorderLayout.NORTH);
 		panelEditar.add(panelCentro, BorderLayout.CENTER);
 		
-		panelEditar.add(panelGuardar, BorderLayout.SOUTH);
+		panelEditar.add(panelGuardarCancelar, BorderLayout.SOUTH);
 		
 		add(panelEditar);
 		

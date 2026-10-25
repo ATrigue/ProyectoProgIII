@@ -137,6 +137,15 @@ public class PanelPerfil {
 		
 		
 		
+		//----AÑADIR AMIGOS-------------------------------------------------------------------------------------------
+		botonAmigo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Codigo para añadir otro usuario a la lista de usuarios
+			}
+		});
+		
+		
 		//----ACCION DE EDITAR PERFIL---------------------------------------------------------------------------------
 		editarPerfil.addActionListener(new ActionListener() {
 			
