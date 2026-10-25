@@ -44,7 +44,7 @@ public class MainProyecto {
 		mapaContenidos.put(l2.getCodIdent(), l2);
 		
 		// Películas
-		Pelicula p1 = new Pelicula(01, "La Bola Negra", "Los Javis", Genero.DRAMA, Idioma.CASTELLANO, LocalDate.of(2026, 9, 25), 155, "Movistar+");
+		Pelicula p1 = new Pelicula(01, "La Bola Negra", "Javier Ambrossi, Javier Calvo", Genero.DRAMA, Idioma.CASTELLANO, LocalDate.of(2026, 9, 25), 155, "Movistar+");
 		Pelicula p2 = new Pelicula(02, "Tomates Verdes Fritos", "Jon Avnet", Genero.DRAMA, Idioma.CASTELLANO, LocalDate.of(1991, 11, 27), 136, "Universal Pictures");
 		p1.setContUser(1937);
 		p2.setContUser(20);
