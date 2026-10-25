@@ -100,7 +100,7 @@ public class VentanaMostrarContenido extends JFrame {
 	            else if (rowIndex == 1) 
 	            	return "Titulo";
 	            else if (rowIndex == 2)
-	            	return "Autor/Director";
+	            	return "Autor(es)/Director(es)";
 	            else if (rowIndex == 3) 
 	            	return "Género";
 	            else if (rowIndex == 4) 
