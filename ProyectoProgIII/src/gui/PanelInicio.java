@@ -17,7 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import domain.Audio;
 import domain.Contenido;
+import domain.Musica;
 
 public class PanelInicio {
 	
@@ -131,7 +133,13 @@ public class PanelInicio {
 
 		// PORTADA
 		ImageIcon img = cont.getImgIcon();
-		Image imgEs = img.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH );
+		Image imgEs;
+		if ( cont instanceof Musica || cont instanceof Audio ) {
+			imgEs = img.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH );
+		}
+		else {
+			imgEs = img.getImage().getScaledInstance(90, 125, Image.SCALE_SMOOTH );
+		}
 		ImageIcon imgDatosEscalada = new ImageIcon( imgEs );
 		JLabel portada = new JLabel( imgDatosEscalada );
 		
