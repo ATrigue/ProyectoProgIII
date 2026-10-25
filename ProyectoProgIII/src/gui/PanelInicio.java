@@ -41,6 +41,13 @@ public class PanelInicio {
 		panelTituloAnyadido.add( labelTituloAnyadido );
 		JLabel labelMasAnyadido = new JLabel( "Ver más", JLabel.RIGHT );
 		labelMasAnyadido.setForeground( Color.BLUE );
+		labelMasAnyadido.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );	
+		labelMasAnyadido.addMouseListener(new MouseAdapter() {
+		// Para crear una ventana que muestre más contenidos añadidos recientemente.
+		public void mouseClicked(MouseEvent e) {
+			new VentanaVerMas( ordenarPorFechaAnya(mapaContenidos), VentanaVerMas.POR_ANYADIDO_RECIENTEMENTE );
+			}
+		});
 		panelTituloAnyadido.add( labelMasAnyadido );
 		
 		JPanel panelDatosAnyadido = new JPanel( new GridLayout( 1, 6, 5, 5 ) );		// Panel para los contenidos del apartado
@@ -50,6 +57,7 @@ public class PanelInicio {
 			JPanel tarjeta = crearTarjeta( contenidosPorFechaAnyadido.removeFirst() );
 			panelDatosAnyadido.add( tarjeta );
 		}
+				
 		panelAnyadido.add(panelDatosAnyadido);		
 				
 		
@@ -64,6 +72,14 @@ public class PanelInicio {
 		panelTituloTend.add( labelTituloTend );
 		JLabel labelMasTend = new JLabel( "Ver más", JLabel.RIGHT );
 		labelMasTend.setForeground( Color.BLUE );
+		labelMasTend.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );
+
+		// Para crear una ventana que muestre más contenidos en tendencia.
+		labelMasTend.addMouseListener(new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			new VentanaVerMas( ordenarPorTendencia(mapaContenidos), VentanaVerMas.POR_TENDENCIA );
+			}
+		});
 		panelTituloTend.add( labelMasTend );
 		
 		JPanel panelDatosTend = new JPanel( new GridLayout( 1, 6, 5, 5 ) );		// Panel para los contenidos del apartado
@@ -74,6 +90,8 @@ public class PanelInicio {
 			panelDatosTend.add( tarjeta );
 		}
 		panelTendencia.add(panelDatosTend);	
+		
+		
 		
 		return panelInicio;
 		
