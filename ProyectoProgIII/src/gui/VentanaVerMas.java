@@ -50,11 +50,11 @@ public class VentanaVerMas extends JFrame {
 		JLabel labelTitulo;		
 		if ( modo == POR_ANYADIDO_RECIENTEMENTE ) {
 			setTitle( "Añadido recientemente" );
-			labelTitulo = new JLabel( "Últimos 30 contenidos añadidos:", JLabel.LEFT );
+			labelTitulo = new JLabel( "Últimos contenidos añadidos:", JLabel.LEFT );
 		}
 		else {
 			setTitle( "Tendencia" );
-			labelTitulo = new JLabel( "30 contenidos más consumidos en este momento:", JLabel.LEFT );
+			labelTitulo = new JLabel( "Contenidos más consumidos en este momento:", JLabel.LEFT );
 		}
 		labelTitulo.setBorder( BorderFactory.createEmptyBorder(10, 15, 10, 15) );
 		panel.add( labelTitulo, BorderLayout.CENTER );
