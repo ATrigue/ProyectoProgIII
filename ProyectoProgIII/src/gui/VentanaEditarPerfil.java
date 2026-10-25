@@ -133,6 +133,7 @@ public class VentanaEditarPerfil extends JDialog{
 		modNombre.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				nomUsuario.setText("");
 				nomUsuario.setEditable(true);
 				nomUsuario.setBackground(null);
 			}
