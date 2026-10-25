@@ -26,6 +26,8 @@ public class PanelPerfil {
 	private static JTextField nomUsuario;
 	private static JTextArea descripcionUsuario;
 	
+	private static ImageIcon imgPerfil;
+	private static JLabel fotoPerfil;
 	
 
 	static JPanel crearPanelPerfil() {
@@ -43,8 +45,8 @@ public class PanelPerfil {
 		//(me falta meter la imagen y calcular bien las proporciones que quiero que tenga)
 		ImageIcon imgP = new ImageIcon("ProyectoProgIII/resources/images/question-mark-transparent-grey-5.png");
 		Image imgPerfilEscalada = imgP.getImage().getScaledInstance(150, 170, Image.SCALE_SMOOTH);
-		ImageIcon imgPerfil = new ImageIcon(imgPerfilEscalada);
-		JLabel fotoPerfil = new JLabel(imgPerfil);
+		imgPerfil = new ImageIcon(imgPerfilEscalada);
+		fotoPerfil = new JLabel(imgPerfil);
 		fotoPerfil.setOpaque(true);
 		
 		editarPerfil = new JButton("Editar Perfil");
@@ -61,6 +63,7 @@ public class PanelPerfil {
 		
 		nomUsuario = new JTextField("[Nombre de usuario]");
 		nomUsuario.setEditable(false);
+		nomUsuario.setBorder(null);
 		
 		descripcionUsuario = new JTextArea(10, 10);
 		descripcionUsuario.setEditable(false);
@@ -146,9 +149,63 @@ public class PanelPerfil {
 				
 				//Inicializo la pantalla desde aqui, sino lo hago no la visualizo
 				ventanaEP.setVisible(true);
+				
+				
+				if (ventanaEP.isGuardado()) {
+					nomUsuario.setText(ventanaEP.getNomUsuario().getText());
+					descripcionUsuario.setText(ventanaEP.getDescUsuario().getText());
+					
+					imgPerfil.setImage(ventanaEP.getImgUsuario().getImage());
+					fotoPerfil.setIcon(imgPerfil);
+					fotoPerfil.repaint();
+				}
 			}
 		});
 		
 		return panelPerfil;
 	}
+
+
+	
+	//--GETTERS Y SETTERS
+	public static JButton getEditarPerfil() {
+		return editarPerfil;
+	}
+
+
+	public static void setEditarPerfil(JButton editarPerfil) {
+		PanelPerfil.editarPerfil = editarPerfil;
+	}
+
+
+	public static JTextField getNomUsuario() {
+		return nomUsuario;
+	}
+
+
+	public static void setNomUsuario(JTextField nomUsuario) {
+		PanelPerfil.nomUsuario = nomUsuario;
+	}
+
+
+	public static JTextArea getDescripcionUsuario() {
+		return descripcionUsuario;
+	}
+
+
+	public static void setDescripcionUsuario(JTextArea descripcionUsuario) {
+		PanelPerfil.descripcionUsuario = descripcionUsuario;
+	}
+
+
+	public static ImageIcon getImgPerfil() {
+		return imgPerfil;
+	}
+
+
+	public static void setImgPerfil(ImageIcon imgPerfil) {
+		PanelPerfil.imgPerfil = imgPerfil;
+	}
+
+	
 }
