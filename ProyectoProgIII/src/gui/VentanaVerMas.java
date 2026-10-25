@@ -46,7 +46,7 @@ public class VentanaVerMas extends JFrame {
 		
 		JLabel labelTitulo;		
 		if ( modo == POR_ANYADIDO_RECIENTEMENTE ) {
-			setTitle( "Añadido Recientemente" );
+			setTitle( "Añadido recientemente" );
 			labelTitulo = new JLabel( "Últimos 30 contenidos añadidos", JLabel.LEFT );
 		}
 		else {
