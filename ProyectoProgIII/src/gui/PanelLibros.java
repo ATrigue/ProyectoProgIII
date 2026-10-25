@@ -1,15 +1,15 @@
 package gui;
 
-import java.awt.BorderLayout;
+import java.util.HashMap;
 
-import javax.swing.JPanel;
+import domain.Contenido;
+import domain.Libro;
 
-public class PanelLibros {
-	
-	static JPanel crearPanelLibros() {
-		
-		JPanel panelLibros = new JPanel(new BorderLayout());
-		
-		return panelLibros;
+public class PanelLibros extends PanelContenido {
+
+	private static final long serialVersionUID = 1L;
+
+	public PanelLibros(HashMap<Long, Contenido> mapa) {
+		super(mapa, Libro.class, "Libros populares esta semana");
 	}
 }

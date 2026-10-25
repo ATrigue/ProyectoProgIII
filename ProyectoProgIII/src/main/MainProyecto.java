@@ -71,6 +71,7 @@ public class MainProyecto {
 
 		mapaContenidos.put(m1.getCodIdent(), m1);
 		mapaContenidos.put(m2.getCodIdent(), m2);
+		mapaContenidos.put(m3.getCodIdent(), m3);
 
 		// Audio
 		Audio a1 = new Audio(7, "The Magnus Archives", "Jonathan Sims", Genero.TERROR, Idioma.INGLES, LocalDate.of(2016, 3, 24), 5000);
