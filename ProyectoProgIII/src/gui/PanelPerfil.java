@@ -43,7 +43,7 @@ public class PanelPerfil {
 		JPanel panelFotoPerfil = new JPanel(new BorderLayout());
 		
 		//(me falta meter la imagen y calcular bien las proporciones que quiero que tenga)
-		ImageIcon imgP = new ImageIcon("ProyectoProgIII/resources/images/question-mark-transparent-grey-5.png");
+		ImageIcon imgP = new ImageIcon("resources/images/question-mark-transparent-grey-5.png");
 		Image imgPerfilEscalada = imgP.getImage().getScaledInstance(150, 170, Image.SCALE_SMOOTH);
 		imgPerfil = new ImageIcon(imgPerfilEscalada);
 		fotoPerfil = new JLabel(imgPerfil);
@@ -118,7 +118,7 @@ public class PanelPerfil {
 			
 			columna.add(new JLabel(c, SwingUtilities.CENTER), BorderLayout.NORTH);
 			
-			ImageIcon img = new ImageIcon("ProyectoProgIII/resources/images/question-mark-transparent-grey-5.png");
+			ImageIcon img = new ImageIcon("resources/images/question-mark-transparent-grey-5.png");
 			Image imgEs = img.getImage().getScaledInstance(170, 200, Image.SCALE_SMOOTH);
 			ImageIcon imgDatoEscalada = new ImageIcon(imgEs);
 			columna.add(new JLabel(imgDatoEscalada), BorderLayout.CENTER);
