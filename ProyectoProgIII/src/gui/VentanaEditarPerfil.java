@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -9,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.concurrent.Flow;
 
@@ -75,6 +78,8 @@ public class VentanaEditarPerfil extends JDialog{
 		modImg = new JButton(imgUsuario);
 		modImg.setPreferredSize(new Dimension(150, 170));
 		panelNorte.add(modImg, BorderLayout.WEST);
+		
+		modImg.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );  // MANITO AL PASAR EL RATON POR ENCIMA
 		
 		
 		//----CAMBIO EL NOMBRE Y LA DESCRIPCION
@@ -162,13 +167,12 @@ public class VentanaEditarPerfil extends JDialog{
 			}
 		});
 		
-		
-		modImg.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		modImg.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				abrirExplorador();
 			}
 		});
+		
 		
 	}
 	//----GETTERS Y SETTERS

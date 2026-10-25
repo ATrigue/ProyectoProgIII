@@ -40,7 +40,7 @@ public class PanelPerfil {
 		
 		
 		///CREO SUBPANEL FOTO
-		JPanel panelFotoPerfil = new JPanel(new BorderLayout());
+		JPanel panelFotoPerfil = new JPanel(new BorderLayout(0, 0));
 		
 		//(me falta meter la imagen y calcular bien las proporciones que quiero que tenga)
 		ImageIcon imgP = new ImageIcon("resources/images/question-mark-transparent-grey-5.png");
