@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
+import domain.Audio;
 import domain.Contenido;
 import domain.Musica;
 
@@ -47,7 +48,13 @@ public class VentanaMostrarContenido extends JFrame {
 		
 		//Imágenes de portada
 		ImageIcon img = cont.getImgIcon();
-		Image imgEs = img.getImage().getScaledInstance(250, 350, Image.SCALE_SMOOTH); //Escala las portadas
+		Image imgEs; 
+		if ( cont instanceof Musica || cont instanceof Audio ) {
+			imgEs = img.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH); //Escala las portadas
+		}
+		else {
+			imgEs = img.getImage().getScaledInstance(250, 350, Image.SCALE_SMOOTH); //Escala las portadas
+		}
 		ImageIcon imgDatosEscalada = new ImageIcon(imgEs);
 		JLabel portada = new JLabel(imgDatosEscalada);
 		

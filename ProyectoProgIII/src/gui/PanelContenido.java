@@ -24,7 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import domain.Audio;
 import domain.Contenido;
+import domain.Musica;
 
 public abstract class PanelContenido extends JPanel {
 
@@ -147,7 +149,13 @@ public abstract class PanelContenido extends JPanel {
 		tarjeta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));   // MANITO AL PASAR EL RATON
 
 		// PORTADA
-		JLabel portada = new JLabel(escalar(c.getImgIcon(), 80, 80), SwingConstants.CENTER);
+		JLabel portada; 
+		if ( c instanceof Musica || c instanceof Audio ) {
+			portada = new JLabel(escalar(c.getImgIcon(), 80, 80), SwingConstants.CENTER);
+		}
+		else {
+			portada = new JLabel(escalar(c.getImgIcon(), 80, 110), SwingConstants.CENTER);
+		}
 		tarjeta.add(portada, BorderLayout.CENTER);
 
 		// TITULO Y AUTOR
