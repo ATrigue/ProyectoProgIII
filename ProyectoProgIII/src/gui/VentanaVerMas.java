@@ -6,12 +6,15 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,20 +45,30 @@ public class VentanaVerMas extends JFrame {
 		
 		
 		JPanel panel = new JPanel( new BorderLayout( 15, 15 ) );
-		this.add( panel );
+		this.add(panel, BorderLayout.NORTH);
 		
 		JLabel labelTitulo;		
 		if ( modo == POR_ANYADIDO_RECIENTEMENTE ) {
 			setTitle( "Añadido recientemente" );
-			labelTitulo = new JLabel( "Últimos 30 contenidos añadidos", JLabel.LEFT );
+			labelTitulo = new JLabel( "Últimos 30 contenidos añadidos:", JLabel.LEFT );
 		}
 		else {
 			setTitle( "Tendencia" );
-			labelTitulo = new JLabel( "30 contenidos más consumidos en este momento", JLabel.LEFT );
+			labelTitulo = new JLabel( "30 contenidos más consumidos en este momento:", JLabel.LEFT );
 		}
 		labelTitulo.setBorder( BorderFactory.createEmptyBorder(10, 15, 10, 15) );
-		panel.add( labelTitulo, BorderLayout.NORTH );
+		panel.add( labelTitulo, BorderLayout.CENTER );
 		
+		//Botón "Volver"
+		JButton botonVolver = new JButton("Volver");
+		
+		botonVolver.addActionListener(new ActionListener() {   //Cierra la ventana actual
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		panel.add(botonVolver, BorderLayout.WEST);
 
 		JPanel panelDatosAnyadido = new JPanel( new GridLayout( 6, 5, 5, 5 ) );		// Panel para los contenidos del apartado
 		panelDatosAnyadido.setBorder( BorderFactory.createEmptyBorder( 10, 15, 10, 15 ));
@@ -67,7 +80,7 @@ public class VentanaVerMas extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane( panelDatosAnyadido );
 		
-		this.add( scrollPane );
+		this.add(scrollPane, BorderLayout.CENTER);
 		
 		setVisible( true );
 		
