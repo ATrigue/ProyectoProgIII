@@ -30,6 +30,7 @@ public class Ventana extends JFrame{
         panelPestanas.addTab("Música", new PanelMusica( mapaContenidos ));
         panelPestanas.addTab("Audio", new PanelAudio( mapaContenidos ));
         panelPestanas.addTab("Perfil", PanelPerfil.crearPanelPerfil());
+        panelPestanas.addTab("Ajustes", PanelAjustes.crearPanelAjustes(panelPestanas));
         
         add(panelPestanas);
 		
