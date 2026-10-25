@@ -32,7 +32,7 @@ public class VentanaMostrarContenido extends JFrame {
 		setSize(ANCHURA, ALTURA); //TAMAÑO PANTALLA
 		setLocationRelativeTo(null);
 		
-		setTitle("Editar contenido"); //TITULO VENTANA
+		setTitle(c.getTitulo()); //TITULO VENTANA
 		
 		//Tabla de detalles que aparece al clickar en la portada de un contenido
 		ModeloTabla modelo = new ModeloTabla();
@@ -137,8 +137,8 @@ public class VentanaMostrarContenido extends JFrame {
 		}
 		@Override
 			public String getColumnName(int column) {
-				if (column == 0) return "Detalle";
-				else return "Valor";
+				if (column == 0) return "Detalles";
+				else return "";
 			}
 	}
 }
