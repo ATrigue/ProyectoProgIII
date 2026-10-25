@@ -62,7 +62,7 @@ public class MainProyecto {
 		mapaContenidos.put(s2.getCodIdent(), s2);
 		
 		// Música
-		Musica m1 = new Musica(05, "Ferragamo", "Trigue", GeneroMusical.TRAP, Idioma.CASTELLANO, LocalDate.of(2000, 7, 1), 0);
+		Musica m1 = new Musica(05, "Ferragamo", "Trigue", GeneroMusical.TRAP, Idioma.CASTELLANO, LocalDate.of(2000, 7, 1), 2);
 		Musica m2 = new Musica(06, "laaaaalalalalalaaaalaaaaaaaa", "Oprheus", GeneroMusical.CLASICA, Idioma.INGLES, LocalDate.of(2016, 5, 6), 4);
 		Musica m3 = new Musica(9, "La nieve", "Guitarricadelafuente", GeneroMusical.ACUSTICO, Idioma.CASTELLANO, LocalDate.of(2026, 5, 6), 4);
 
