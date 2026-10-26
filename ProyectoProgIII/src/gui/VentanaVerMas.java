@@ -79,6 +79,7 @@ public class VentanaVerMas extends JFrame {
 		}
 		
 		JScrollPane scrollPane = new JScrollPane( panelDatosAnyadido );
+		scrollPane.getVerticalScrollBar().setUnitIncrement(20); //SUBE LA VELOCIDAD DEL SCROLL EN EL APARTADO "Ver más"
 		
 		this.add(scrollPane, BorderLayout.CENTER);
 		
