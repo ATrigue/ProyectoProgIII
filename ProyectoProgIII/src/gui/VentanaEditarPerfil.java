@@ -92,7 +92,7 @@ public class VentanaEditarPerfil extends JDialog{
 		descUsuario = new JTextArea(perfil.getDescripcionUsuario().getText());
 		descUsuario.setEditable(false);
 		
-		ImageIcon imgEditar = new ImageIcon("ProyectoProgIII/resources/images/lapiz_editar_perfil.png");
+		ImageIcon imgEditar = new ImageIcon("resources/images/lapiz_editar_perfil.png");
 		Image imgesc = imgEditar.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		
 		modNombre = new JButton(new ImageIcon(imgesc));
