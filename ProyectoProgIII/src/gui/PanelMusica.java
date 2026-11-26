@@ -1,15 +1,14 @@
 package gui;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import domain.Contenido;
-import domain.Musica;
 
 public class PanelMusica extends PanelContenido {
 
 	private static final long serialVersionUID = 1L;
 
-	public PanelMusica(HashMap<Long, Contenido> mapa) {
-		super(mapa, Musica.class, "Música popular esta semana");
+	public PanelMusica(TreeMap<Long, Contenido> mapa) {
+		super(mapa, "Música popular esta semana");
 	}
 }

@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,12 +17,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import domain.Audio;
+import domain.Catalogo;
 import domain.Contenido;
 import domain.Musica;
 
 public class PanelInicio {
-	
-	public static JPanel crearPanelInicio( HashMap<Long, Contenido> mapaContenidos ) {
+
+	public static JPanel crearPanelInicio( Catalogo catalogo ) {
 		
 		// Crear panel inicio 
 		JPanel panelInicio = new JPanel( new GridLayout( 2, 1, 15, 15 ) );
@@ -45,15 +45,15 @@ public class PanelInicio {
 		labelMasAnyadido.addMouseListener(new MouseAdapter() {
 		// Para crear una ventana que muestre más contenidos añadidos recientemente.
 		public void mouseClicked(MouseEvent e) {
-			new VentanaVerMas( ordenarPorFechaAnya(mapaContenidos), VentanaVerMas.POR_ANYADIDO_RECIENTEMENTE );
+			new VentanaVerMas( ordenarPorFechaAnya(catalogo), VentanaVerMas.POR_ANYADIDO_RECIENTEMENTE );
 			}
 		});
 		panelTituloAnyadido.add( labelMasAnyadido );
 		
 		JPanel panelDatosAnyadido = new JPanel( new GridLayout( 1, 6, 5, 5 ) );		// Panel para los contenidos del apartado
 		panelDatosAnyadido.setBorder( BorderFactory.createEmptyBorder( 10, 15, 10, 15 ));
-		ArrayList<Contenido> contenidosPorFechaAnyadido = ordenarPorFechaAnya(mapaContenidos);
-		for ( int i = 0; i < 6; i ++ ) {
+		ArrayList<Contenido> contenidosPorFechaAnyadido = ordenarPorFechaAnya(catalogo);
+		for ( int i = 0; i < 6 && !contenidosPorFechaAnyadido.isEmpty(); i ++ ) {
 			JPanel tarjeta = crearTarjeta( contenidosPorFechaAnyadido.removeFirst() );
 			panelDatosAnyadido.add( tarjeta );
 		}
@@ -77,15 +77,15 @@ public class PanelInicio {
 		// Para crear una ventana que muestre más contenidos en tendencia.
 		labelMasTend.addMouseListener(new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
-			new VentanaVerMas( ordenarPorTendencia(mapaContenidos), VentanaVerMas.POR_TENDENCIA );
+			new VentanaVerMas( ordenarPorTendencia(catalogo), VentanaVerMas.POR_TENDENCIA );
 			}
 		});
 		panelTituloTend.add( labelMasTend );
 		
 		JPanel panelDatosTend = new JPanel( new GridLayout( 1, 6, 5, 5 ) );		// Panel para los contenidos del apartado
 		panelDatosTend.setBorder( BorderFactory.createEmptyBorder( 10, 15, 10, 15 ));
-		 ArrayList<Contenido> contenidosPorTend = ordenarPorTendencia(mapaContenidos);
-		for ( int i = 0; i < 6; i ++ ) {
+		 ArrayList<Contenido> contenidosPorTend = ordenarPorTendencia(catalogo);
+		for ( int i = 0; i < 6 && !contenidosPorTend.isEmpty(); i ++ ) {
 			JPanel tarjeta = crearTarjeta( contenidosPorTend.removeFirst() );
 			panelDatosTend.add( tarjeta );
 		}
@@ -98,14 +98,11 @@ public class PanelInicio {
 	}
 	
 	
-	private static ArrayList<Contenido> ordenarPorFechaAnya( HashMap<Long, Contenido> mapaContenidos ) {
-		
-		// Ordenar datos por fecha añadido
-		ArrayList<Contenido> datosPorFecha = new ArrayList<Contenido>();
-		for ( long cod : mapaContenidos.keySet() ) {
-			datosPorFecha.add( mapaContenidos.get(cod) );
-		}
-				
+	private static ArrayList<Contenido> ordenarPorFechaAnya( Catalogo catalogo ) {
+
+		// Ordenar datos por fecha añadido (se juntan los contenidos de todas las categorías)
+		ArrayList<Contenido> datosPorFecha = catalogo.getTodos();
+
 		datosPorFecha.sort( new Comparator<Contenido>( ) {	// Ordena la lista de manera que esté ordenada por la fecha en la que se añadió el contenido.
 			@Override
 			public int compare(Contenido o1, Contenido o2) {
@@ -116,15 +113,12 @@ public class PanelInicio {
 		
 	}
 	
-	private static ArrayList<Contenido> ordenarPorTendencia( HashMap<Long, Contenido> mapaContenidos ) {
-		
-		// Ordenar datos por fecha añadido
-		ArrayList<Contenido> datosPorTendencia = new ArrayList<Contenido>();
-		for ( long cod : mapaContenidos.keySet() ) {
-			datosPorTendencia.add( mapaContenidos.get(cod) );
-		}
-				
-		datosPorTendencia.sort( new Comparator<Contenido>( ) {	// Ordena la lista de manera que esté ordenada por la fecha en la que se añadió el contenido.
+	private static ArrayList<Contenido> ordenarPorTendencia( Catalogo catalogo ) {
+
+		// Ordenar datos por número de usuarios que lo tienen (se juntan los contenidos de todas las categorías)
+		ArrayList<Contenido> datosPorTendencia = catalogo.getTodos();
+
+		datosPorTendencia.sort( new Comparator<Contenido>( ) {	// Ordena la lista de manera que los contenidos con más usuarios queden primero.
 			@Override
 			public int compare(Contenido o1, Contenido o2) {
 				if ( o1.getContUser() > o2 .getContUser() ) {

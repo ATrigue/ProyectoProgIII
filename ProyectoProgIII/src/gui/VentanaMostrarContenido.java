@@ -41,7 +41,7 @@ public class VentanaMostrarContenido extends JFrame {
 		
 		JTable tabla = new JTable(modelo);
 		JScrollPane scrollPane = new JScrollPane(tabla);
-		scrollPane.setPreferredSize(new Dimension(scrollPane.getPreferredSize().width, 150)); //Limita el tamaño vertical del scrollpane
+		scrollPane.setPreferredSize(new Dimension(scrollPane.getPreferredSize().width, 190)); //Limita el tamaño vertical del scrollpane (190 para que quepan las 10 filas)
 		
 		JPanel panelDetalles = new JPanel(new BorderLayout(5, 5));
 		panelDetalles.add(scrollPane, BorderLayout.NORTH);
@@ -84,7 +84,7 @@ public class VentanaMostrarContenido extends JFrame {
 		
 		@Override
 		public int getRowCount() {
-			return 8;
+			return 10;
 		}
 
 		@Override
@@ -109,7 +109,11 @@ public class VentanaMostrarContenido extends JFrame {
 	            	return "Fecha de Publicación";
 	            else if (rowIndex == 6) 
 	            	return "Duración";
-	            else return "Fecha de Añadido";
+	            else if (rowIndex == 7)
+	            	return "Fecha de Añadido";
+	            else if (rowIndex == 8)
+	            	return "Calificación media";
+	            else return "Nº de usuarios";
 			} else {
 				if (rowIndex == 0) 
 	            	return c.getCodIdent();
@@ -131,7 +135,11 @@ public class VentanaMostrarContenido extends JFrame {
 	            	return c.getFechaPub();
 	            else if (rowIndex == 6) 
 	            	return c.getDuracion();
-	            else return c.getFechaAnya();
+	            else if (rowIndex == 7)
+	            	return c.getFechaAnya();
+	            else if (rowIndex == 8)
+	            	return c.getCalif();
+	            else return c.getContUser();
 			}
 		
 		}

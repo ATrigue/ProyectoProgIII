@@ -12,9 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -32,18 +31,16 @@ public abstract class PanelContenido extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private HashMap<Long, Contenido> mapaContenidos;
-	private Class<? extends Contenido> tipo;   // Musica.class, Pelicula.class...
+	private TreeMap<Long, Contenido> mapaContenidos;   // SOLO los contenidos de esta categoría, ordenados por código
 	private String tituloSeccion;
 	private JPanel panelTarjetas;
 
 
 	// ~~~~~~ CONSTRUCTOR ~~~~~~
 
-	protected PanelContenido(HashMap<Long, Contenido> mapa, Class<? extends Contenido> tipo, String tituloSeccion) {
+	protected PanelContenido(TreeMap<Long, Contenido> mapa, String tituloSeccion) {
 		super(new BorderLayout(0, 15));
 		this.mapaContenidos = mapa;
-		this.tipo = tipo;
 		this.tituloSeccion = tituloSeccion;
 
 		setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
@@ -120,18 +117,19 @@ public abstract class PanelContenido extends JPanel {
 		panelTarjetas.removeAll();
 		String t = texto.toLowerCase();
 
-		// 1. BUSCA EN EL MAPA LOS CONTENIDOS DEL TIPO CORRECTO QUE COINCIDAN CON LA BUSQUEDA
+		// 1. BUSCA EN EL MAPA DE ESTA CATEGORIA LOS CONTENIDOS QUE COINCIDAN CON LA BUSQUEDA
+		//    (EL TREEMAP YA DEVUELVE LOS VALORES ORDENADOS POR CODIGO IDENTIFICATIVO)
 		List<Contenido> lista = new ArrayList<>();
 		for (Contenido c : mapaContenidos.values()) {
-			if (tipo.isInstance(c) && c.getTitulo().toLowerCase().contains(t)) {
+			boolean coincideTitulo = c.getTitulo().toLowerCase().contains(t);
+			boolean coincideAutor = c.getAutorDirector().toLowerCase().contains(t);
+
+			if (coincideTitulo || coincideAutor) {
 				lista.add(c);
 			}
 		}
 
-		// 2. LOS ORDENA POR CODIGO IDENTIFICATIVO
-		lista.sort(Comparator.comparingLong(Contenido::getCodIdent));
-
-		// 3. CREA UNA TARJETA POR CADA UNO
+		// 2. CREA UNA TARJETA POR CADA UNO
 		for (Contenido c : lista) {
 			panelTarjetas.add(crearTarjeta(c));
 		}
