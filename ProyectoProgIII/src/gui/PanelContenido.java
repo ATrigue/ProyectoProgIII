@@ -123,8 +123,13 @@ public abstract class PanelContenido extends JPanel {
 		// 1. BUSCA EN EL MAPA LOS CONTENIDOS DEL TIPO CORRECTO QUE COINCIDAN CON LA BUSQUEDA
 		List<Contenido> lista = new ArrayList<>();
 		for (Contenido c : mapaContenidos.values()) {
-			if (tipo.isInstance(c) && c.getTitulo().toLowerCase().contains(t)) {
-				lista.add(c);
+			if (tipo.isInstance(c)) {
+				boolean coincideTitulo = c.getTitulo().toLowerCase().contains(t);
+				boolean coincideAutor = c.getAutorDirector().toLowerCase().contains(t);
+
+				if (coincideTitulo || coincideAutor) {
+					lista.add(c);
+				}
 			}
 		}
 
