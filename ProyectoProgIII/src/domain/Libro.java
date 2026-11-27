@@ -18,10 +18,6 @@ public class Libro extends Contenido {
 		setPaginas(paginas);
 	}
 
-
-	
-	
-	
 	// ~~~~~~ GETTERS Y SETTERS ~~~~~~
 	
 	public String getEditorial() {
@@ -30,6 +26,10 @@ public class Libro extends Contenido {
 
 
 	public void setEditorial(String editorial) {
+		if ( editorial == null ) {
+			this.editorial = "N/A";
+			return;
+		}
 		this.editorial = editorial;
 	}
 

@@ -8,7 +8,7 @@ public class Contenido {
 
 	//  ~~~~~~ ATRIBUTOS ~~~~~~
 	
-	private long codIdent = 0;		// Código identificativo del contenido, como pueden ser el ISBN o el ISAN.
+	private long codIdent = 0;		// Código identificativo del contenido: es el ID de su tabla en la base de datos (se repite entre categorías, pero no dentro de una misma).
 	private ImageIcon imgIcon = new ImageIcon( "resources/images/question-mark-transparent-grey-5.png" ); // Imagen default.
 	private String titulo = "N/A";
 	private String autorDirector = "N/A";	// En película y serie guarda el director
@@ -132,7 +132,9 @@ public class Contenido {
 		
 		
 	/**
-	 * Dos productos son iguales si son iguales sus códigos de identificación.
+	 * Dos contenidos son iguales si son de la misma categoría (libro, película...) y tienen el mismo código de identificación.
+	 * Se compara también la categoría porque el código solo es único dentro de su categoría
+	 * (puede existir un libro 1 y una película 1).
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -140,10 +142,18 @@ public class Contenido {
 			return false;
 		} else if (obj instanceof Contenido) {
 			Contenido c2 = (Contenido) obj;
-			return  ( codIdent == c2.getCodIdent() );
+			return  ( this.getClass() == c2.getClass() && codIdent == c2.getCodIdent() );
 		} else {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Siempre que se sobrescribe equals hay que sobrescribir también hashCode, con los mismos datos.
+	 */
+	@Override
+	public int hashCode() {
+		return Long.hashCode( codIdent ) * 31 + this.getClass().getName().hashCode();
+	}
+
 }

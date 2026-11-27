@@ -16,9 +16,6 @@ public class Musica extends Contenido {
 		setGenMus(genMus);
 	}
 
-	
-	
-	
 	// ~~~~~~ GETTERS Y SETTERS ~~~~~~
 	
 	public GeneroMusical getGenMus() {

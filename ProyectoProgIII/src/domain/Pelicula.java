@@ -16,8 +16,6 @@ public class Pelicula extends Contenido {
 		setDistribuidor(distribuidor);
 	}
 
-
-	
 	// ~~~~~~ GETTERS Y SETTERS ~~~~~~
 	
 	public String getDistribuidor() {
@@ -26,6 +24,10 @@ public class Pelicula extends Contenido {
 
 
 	public void setDistribuidor(String distribuidor) {
+		if ( distribuidor == null ) {
+			this.distribuidor = "N/A";
+			return;
+		}
 		this.distribuidor = distribuidor;
 	}
 	
