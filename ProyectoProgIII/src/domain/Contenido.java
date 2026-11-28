@@ -26,7 +26,7 @@ public class Contenido {
 	// ~~~~~~ CONSTRUCTOR ~~~~~~
 	
 	public Contenido(long codIdent, String titulo, String autorDirector, Genero genero, Idioma idioma, LocalDate fechaPub, int duracion) {
-		setCodIdent(codIdent);
+		setCalif(codIdent);
 		setTitulo(titulo);
 		setAutorDirector(autorDirector);
 		setGenero(genero);
@@ -47,6 +47,7 @@ public class Contenido {
 	public void setCodIdent(long codIdent) {
 		this.codIdent = codIdent;
 	}
+	
 	public ImageIcon getImgIcon() {
 		return imgIcon;
 	}

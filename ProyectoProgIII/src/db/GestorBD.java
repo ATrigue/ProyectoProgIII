@@ -23,6 +23,7 @@ import domain.Libro;
 import domain.Musica;
 import domain.Pelicula;
 import domain.Serie;
+import domain.Usuario;
 
 public class GestorBD {
 
@@ -43,6 +44,7 @@ public class GestorBD {
 		st.close();
 		return con;
 	}
+	
 
 	// ~~~~~~ CARGA DE LOS CONTENIDOS ~~~~~~
 
@@ -247,5 +249,46 @@ public class GestorBD {
 		}
 		return new ImageIcon( IMG_DEFECTO );
 	}
+	
+	
+	
+
+	
+	// ~~~~~~ Carga de los Usuarios ~~~~~
+	
+	public static TreeMap<Integer, Usuario> cargarUsuarios() {
+		
+		TreeMap<Integer, Usuario> usuarios = new TreeMap<Integer, Usuario>();
+
+			try ( Connection con = conectar() ) {
+
+				try ( Statement stmt = con.createStatement() ) {
+					
+				ResultSet rs = stmt.executeQuery( "SELECT * FROM usuario" );
+					
+					while ( rs.next() ) {
+							
+						int codigo = rs.getInt( "cod_usu" );
+						String nomUsuario = rs.getString( "nom_usu" );
+						ImageIcon img = leerImagen(rs.getString( "ruta_img" ) );
+						String desc = rs.getString( "descripcion" );
+							
+						Usuario u = new Usuario(codigo, nomUsuario, img, desc);
+						System.out.println(u);
+						usuarios.put(codigo, u );
+						
+					}
+					
+				}
+				
+
+			} catch ( SQLException e ) {
+				System.err.println( "Error al cargar los usuarios de la base de datos: " + e.getMessage() );
+				e.printStackTrace();
+			}
+
+		return usuarios;
+	
+	}	
 
 }
