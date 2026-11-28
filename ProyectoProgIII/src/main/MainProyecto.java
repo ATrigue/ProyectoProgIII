@@ -16,7 +16,7 @@ public class MainProyecto {
 		Catalogo catalogo = GestorBD.cargarCatalogo();
 		TreeMap<Integer, Usuario> usuarios = GestorBD.cargarUsuarios();
 
-		Ventana v = new Ventana( catalogo );
+		Ventana v = new Ventana( catalogo ); // CREACION DE LA VENTANA
 	}
 
 }

@@ -7,17 +7,23 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -25,6 +31,7 @@ import javax.swing.SwingConstants;
 
 import domain.Audio;
 import domain.Contenido;
+import domain.Genero;
 import domain.Musica;
 
 public abstract class PanelContenido extends JPanel {
@@ -34,6 +41,15 @@ public abstract class PanelContenido extends JPanel {
 	private TreeMap<Long, Contenido> mapaContenidos;   // SOLO los contenidos de esta categoría, ordenados por código
 	private String tituloSeccion;
 	private JPanel panelTarjetas;
+	private JLabel etiquetaResultados;
+
+	// COMPONENTES DE BUSQUEDA Y FILTROS (ATRIBUTOS PARA PODER LEERLOS DESDE cargarTarjetas)
+	private JTextField cajaBuscar;
+	private JComboBox<String> comboGenero;
+	private JComboBox<String> comboAnyo;
+	private JComboBox<String> comboCalif;
+	private JComboBox<String> comboOrden;
+	private Object[] generos;   // GENEROS DE ESTA CATEGORIA, EN EL MISMO ORDEN QUE EN comboGenero (SIN CONTAR "Todos")
 
 
 	// ~~~~~~ CONSTRUCTOR ~~~~~~
@@ -67,13 +83,13 @@ public abstract class PanelContenido extends JPanel {
 		JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		JLabel etiqueta = new JLabel("Buscar 🔍");
-		JTextField cajaBuscar = new JTextField(20);
+		cajaBuscar = new JTextField(20);
 
 		// CADA VEZ QUE SE SUELTA UNA TECLA SE VUELVEN A CARGAR LAS TARJETAS CON EL TEXTO ESCRITO
 		cajaBuscar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				cargarTarjetas(cajaBuscar.getText());
+				cargarTarjetas();
 			}
 		});
 
@@ -85,14 +101,94 @@ public abstract class PanelContenido extends JPanel {
 
 	private JPanel crearPanelFiltros() {
 
-		JPanel panelFiltros = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
+		JPanel panelFiltros = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 5));
 
-		String[] filtros = { "Año", "Calificación", "Popularidad", "Género" };
-		for (String filtro : filtros) {
-			panelFiltros.add(new JButton(filtro));
+		// CADA VEZ QUE SE CAMBIA UN DESPLEGABLE SE VUELVEN A CARGAR LAS TARJETAS
+		ActionListener alCambiar = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cargarTarjetas();
+			}
+		};
+
+		// GENERO: LAS OPCIONES LAS DA getGeneros() (MUSICA LO SOBRESCRIBE CON SUS GENEROS MUSICALES)
+		generos = getGeneros();
+		comboGenero = new JComboBox<>();
+		comboGenero.addItem("Todos");
+		for (Object g : generos) {
+			comboGenero.addItem(formatear(g.toString()));
 		}
 
+		// AÑO: SOLO LOS AÑOS QUE APARECEN EN ESTA CATEGORIA, DEL MAS RECIENTE AL MAS ANTIGUO
+		TreeSet<Integer> anyos = new TreeSet<>();
+		for (Contenido c : mapaContenidos.values()) {
+			if (c.getFechaPub() != null) {
+				anyos.add(c.getFechaPub().getYear());
+			}
+		}
+		comboAnyo = new JComboBox<>();
+		comboAnyo.addItem("Todos");
+		for (Integer anyo : anyos.descendingSet()) {
+			comboAnyo.addItem(String.valueOf(anyo));
+		}
+
+		// CALIFICACION MINIMA: LA POSICION EN EL DESPLEGABLE ES EL NUMERO DE ESTRELLAS MINIMO
+		comboCalif = new JComboBox<>(new String[] { "Cualquiera", "1★ o más", "2★ o más", "3★ o más", "4★ o más", "5★" });
+
+		// ORDEN (AQUI ENTRA LA POPULARIDAD)
+		comboOrden = new JComboBox<>(new String[] { "Por defecto", "Más populares", "Mejor valorados", "Más recientes", "Título (A-Z)" });
+
+		comboGenero.addActionListener(alCambiar);
+		comboAnyo.addActionListener(alCambiar);
+		comboCalif.addActionListener(alCambiar);
+		comboOrden.addActionListener(alCambiar);
+
+		// BOTON PARA QUITAR TODOS LOS FILTROS DE GOLPE
+		JButton botonLimpiar = new JButton("Limpiar filtros");
+		botonLimpiar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				limpiarFiltros();
+			}
+		});
+
+		panelFiltros.add(new JLabel("Género:"));
+		panelFiltros.add(comboGenero);
+		panelFiltros.add(new JLabel("Año:"));
+		panelFiltros.add(comboAnyo);
+		panelFiltros.add(new JLabel("Calificación:"));
+		panelFiltros.add(comboCalif);
+		panelFiltros.add(new JLabel("Ordenar:"));
+		panelFiltros.add(comboOrden);
+		panelFiltros.add(botonLimpiar);
+
 		return panelFiltros;
+	}
+
+	private void limpiarFiltros() {
+		cajaBuscar.setText("");
+		comboGenero.setSelectedIndex(0);
+		comboAnyo.setSelectedIndex(0);
+		comboCalif.setSelectedIndex(0);
+		comboOrden.setSelectedIndex(0);
+		cargarTarjetas();
+	}
+
+
+	// ~~~~~~ GENEROS (SE PUEDEN SOBRESCRIBIR EN LAS SUBCLASES) ~~~~~~
+
+	// POR DEFECTO LOS CONTENIDOS USAN Genero. MUSICA USA GeneroMusical Y SOBRESCRIBE ESTOS DOS METODOS
+	protected Object[] getGeneros() {
+		return Genero.values();
+	}
+
+	protected Object getGeneroDe(Contenido c) {
+		return c.getGenero();
+	}
+
+	// "HISTORICA" -> "Historica"
+	private String formatear(String texto) {
+		return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
 	}
 
 
@@ -102,40 +198,117 @@ public abstract class PanelContenido extends JPanel {
 
 		JPanel panelSur = new JPanel(new BorderLayout(0, 15));
 
-		panelSur.add(new JLabel(tituloSeccion), BorderLayout.NORTH);
+		JPanel panelCabecera = new JPanel(new BorderLayout());
+		panelCabecera.add(new JLabel(tituloSeccion), BorderLayout.WEST);
+		etiquetaResultados = new JLabel();
+		panelCabecera.add(etiquetaResultados, BorderLayout.EAST);
+		panelSur.add(panelCabecera, BorderLayout.NORTH);
 
 		panelTarjetas = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		panelSur.add(panelTarjetas, BorderLayout.CENTER);
 
-		cargarTarjetas("");   // AL INICIO SE CARGAN TODOS (TEXTO VACIO)
+		cargarTarjetas();   // AL INICIO SE CARGAN TODOS (NO HAY NINGUN FILTRO PUESTO)
 
 		return panelSur;
 	}
 
-	private void cargarTarjetas(String texto) {
+	private void cargarTarjetas() {
 
 		panelTarjetas.removeAll();
-		String t = texto.toLowerCase();
 
-		// 1. BUSCA EN EL MAPA DE ESTA CATEGORIA LOS CONTENIDOS QUE COINCIDAN CON LA BUSQUEDA
+		// 1. RECORRE EL MAPA DE ESTA CATEGORIA Y SE QUEDA CON LOS QUE CUMPLEN LA BUSQUEDA Y TODOS LOS FILTROS
 		//    (EL TREEMAP YA DEVUELVE LOS VALORES ORDENADOS POR CODIGO IDENTIFICATIVO)
 		List<Contenido> lista = new ArrayList<>();
 		for (Contenido c : mapaContenidos.values()) {
-			boolean coincideTitulo = c.getTitulo().toLowerCase().contains(t);
-			boolean coincideAutor = c.getAutorDirector().toLowerCase().contains(t);
-
-			if (coincideTitulo || coincideAutor) {
+			if (cumpleFiltros(c)) {
 				lista.add(c);
 			}
 		}
 
-		// 2. CREA UNA TARJETA POR CADA UNO
+		// 2. LOS ORDENA SEGUN LO ELEGIDO EN "Ordenar"
+		ordenar(lista);
+
+		// 3. CREA UNA TARJETA POR CADA UNO (O UN MENSAJE SI NO HAY NINGUNO)
 		for (Contenido c : lista) {
 			panelTarjetas.add(crearTarjeta(c));
 		}
+		if (lista.isEmpty()) {
+			panelTarjetas.add(new JLabel("No se han encontrado resultados"));
+		}
+		etiquetaResultados.setText(lista.size() + " resultado(s)");
 
 		panelTarjetas.revalidate();
 		panelTarjetas.repaint();
+	}
+
+	// DEVUELVE true SI EL CONTENIDO PASA EL BUSCADOR Y TODOS LOS FILTROS. EN CUANTO FALLA UNO, DEVUELVE false
+	private boolean cumpleFiltros(Contenido c) {
+
+		// BUSCADOR: TITULO O AUTOR
+		String t = cajaBuscar.getText().toLowerCase();
+		boolean coincideTitulo = c.getTitulo().toLowerCase().contains(t);
+		boolean coincideAutor = c.getAutorDirector().toLowerCase().contains(t);
+		if (!coincideTitulo && !coincideAutor) {
+			return false;
+		}
+
+		// GENERO (POSICION 0 = "Todos")
+		int posGenero = comboGenero.getSelectedIndex();
+		if (posGenero > 0) {
+			Object generoElegido = generos[posGenero - 1];
+			if (getGeneroDe(c) != generoElegido) {   // SON ENUMS, SE PUEDEN COMPARAR CON ==
+				return false;
+			}
+		}
+
+		// AÑO (POSICION 0 = "Todos")
+		if (comboAnyo.getSelectedIndex() > 0) {
+			int anyoElegido = Integer.parseInt((String) comboAnyo.getSelectedItem());
+			if (c.getFechaPub() == null || c.getFechaPub().getYear() != anyoElegido) {
+				return false;
+			}
+		}
+
+		// CALIFICACION MINIMA (LA POSICION ES EL NUMERO DE ESTRELLAS; 0 = "Cualquiera")
+		int estrellasMin = comboCalif.getSelectedIndex();
+		if (estrellasMin > 0 && c.getCalif() < estrellasMin) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private void ordenar(List<Contenido> lista) {
+
+		final int criterio = comboOrden.getSelectedIndex();
+		if (criterio == 0) {
+			return;   // "Por defecto": SE QUEDAN ORDENADOS POR CODIGO, COMO VIENEN DEL TREEMAP
+		}
+
+		Collections.sort(lista, new Comparator<Contenido>() {
+			@Override
+			public int compare(Contenido c1, Contenido c2) {
+				switch (criterio) {
+				case 1:   // MAS POPULARES PRIMERO (MAS USUARIOS LO TIENEN EN SU BIBLIOTECA)
+					return Integer.compare(c2.getContUser(), c1.getContUser());
+				case 2:   // MEJOR CALIFICACION PRIMERO
+					return Float.compare(c2.getCalif(), c1.getCalif());
+				case 3:   // MAS RECIENTES PRIMERO (LOS QUE NO TIENEN FECHA VAN AL FINAL)
+					if (c1.getFechaPub() == null && c2.getFechaPub() == null) {
+						return 0;
+					} else if (c1.getFechaPub() == null) {
+						return 1;
+					} else if (c2.getFechaPub() == null) {
+						return -1;
+					}
+					return c2.getFechaPub().compareTo(c1.getFechaPub());
+				case 4:   // TITULO ALFABETICO
+					return c1.getTitulo().compareToIgnoreCase(c2.getTitulo());
+				default:
+					return 0;
+				}
+			}
+		});
 	}
 
 	// protected PARA QUE UNA SUBCLASE PUEDA SOBRESCRIBIRLA SI NECESITA UNA TARJETA DISTINTA
