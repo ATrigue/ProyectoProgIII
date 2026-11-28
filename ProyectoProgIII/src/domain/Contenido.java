@@ -26,14 +26,14 @@ public class Contenido {
 	// ~~~~~~ CONSTRUCTOR ~~~~~~
 	
 	public Contenido(long codIdent, String titulo, String autorDirector, Genero genero, Idioma idioma, LocalDate fechaPub, int duracion) {
-		setCalif(codIdent);
+		setCodIdent(codIdent);
 		setTitulo(titulo);
 		setAutorDirector(autorDirector);
 		setGenero(genero);
 		setIdioma(idioma);
 		setFechaPub(fechaPub);
 		setDuracion(duracion);
-		fechaAnya = LocalDate.now();
+		this.fechaAnya = LocalDate.now();
 	}	
 	
 	

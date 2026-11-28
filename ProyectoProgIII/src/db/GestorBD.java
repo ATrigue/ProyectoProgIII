@@ -274,13 +274,13 @@ public class GestorBD {
 						String desc = rs.getString( "descripcion" );
 							
 						Usuario u = new Usuario(codigo, nomUsuario, img, desc);
-						System.out.println(u);
-						usuarios.put(codigo, u );
+						cargarContenidosUsuario( con, u );
+						System.out.println( u );	//TODO quitar cuando terminen las pruebas
+						usuarios.put( codigo, u );
 						
 					}
 					
-				}
-				
+				}			
 
 			} catch ( SQLException e ) {
 				System.err.println( "Error al cargar los usuarios de la base de datos: " + e.getMessage() );
@@ -290,5 +290,98 @@ public class GestorBD {
 		return usuarios;
 	
 	}	
+	
+	
+	public static void cargarContenidosUsuario( Connection con, Usuario u ) throws SQLException {
+		
+		int codUsu = u.getCodigo();
+		
+		// Cargar Libros
+		String queryLibros = """ 
+				SELECT *
+				FROM libro l LEFT JOIN genero g ON l.cod_gen = g.cod_gen LEFT JOIN idioma i ON l.cod_id = i.cod_id
+				WHERE cod_li in( SELECT cod_li FROM tiene_libro WHERE cod_usu = 
+				""" + codUsu + ");";
+					
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( queryLibros ) ) {
+			while ( rs.next() ) {
+				Libro l = new Libro( rs.getLong( "cod_li" ), rs.getString( "titulo" ), rs.getString( "autor" ), leerGenero( rs.getString( "nom_gen" ) ), 
+						leerIdioma( rs.getString( "nom_id" ) ), leerFecha( rs.getString( "fecha_pub" ) ), rs.getString( "editorial" ), rs.getInt( "num_pag" ) );
+				completar( l, rs );
+				u.getMapLibros().put( l.getCodIdent() , l);
+			}
+		}
+		
+		
+		// Cargar Audios
+		String queryAudios = """ 
+				SELECT *
+				FROM audio a LEFT JOIN genero g ON a.cod_gen = g.cod_gen LEFT JOIN idioma i ON a.cod_id = i.cod_id
+				WHERE cod_au in( SELECT cod_au FROM tiene_audio WHERE cod_usu =
+				""" + codUsu + ");";
+							
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( queryAudios ) ) {
+			while ( rs.next() ) {
+				Audio a = new Audio( rs.getLong( "cod_au" ), rs.getString( "titulo" ), rs.getString( "autor" ), leerGenero( rs.getString( "nom_gen" ) ), 
+						leerIdioma( rs.getString( "nom_id" ) ), leerFecha( rs.getString( "fecha_pub" ) ), rs.getInt( "duracion" ) );
+				completar( a, rs );
+				u.getMapAudios().put( a.getCodIdent() , a );
+			}
+		}
+		
+		
+		// Cargar Películas
+		String queryPelis = """ 
+				SELECT *
+				FROM pelicula p LEFT JOIN genero g ON p.cod_gen = g.cod_gen LEFT JOIN idioma i ON p.cod_id = i.cod_id
+				where cod_pe in( SELECT cod_pe FROM tiene_peli WHERE cod_usu = 
+				""" + codUsu + ");";			
+				
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( queryPelis ) ) {
+			while ( rs.next() ) {
+				Pelicula p = new Pelicula( rs.getLong( "cod_pe" ), rs.getString( "titulo" ), rs.getString( "autor" ), leerGenero( rs.getString( "nom_gen" ) ), 
+						leerIdioma( rs.getString( "nom_id" ) ), leerFecha( rs.getString( "fecha_pub" ) ), rs.getInt( "duracion" ), rs.getString( "distribuidor" ) );
+				completar( p, rs );
+				u.getMapPelis().put( p.getCodIdent() , p );
+			}
+		}
+		
+		
+		// Cargar Series
+		String querySeries = """ 
+				SELECT *
+				FROM serie s LEFT JOIN genero g ON s.cod_gen = g.cod_gen LEFT JOIN idioma i ON s.cod_id = i.cod_id
+				where cod_se in( SELECT cod_se FROM tiene_serie WHERE cod_usu = 
+				""" + codUsu + ");";			
+				
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( querySeries ) ) {
+			while ( rs.next() ) {
+				Serie s = new Serie( rs.getLong( "cod_se" ), rs.getString( "titulo" ), rs.getString( "autor" ), leerGenero( rs.getString( "nom_gen" ) ), 
+						leerIdioma( rs.getString( "nom_id" ) ), leerFecha( rs.getString( "fecha_pub" ) ), rs.getInt( "duracion" ), rs.getString( "distribuidor" ) );
+				completar( s, rs );
+				u.getMapSeries().put( s.getCodIdent() , s );
+			}
+		}
+		
+		
+		// Cargar Musica
+		String queryMusica = """ 
+				SELECT *
+				FROM musica m LEFT JOIN genero_musical g ON m.cod_gen_mus = g.cod_gen_mus LEFT JOIN idioma i ON m.cod_id = i.cod_id
+				where cod_mu in( SELECT cod_mu FROM tiene_musica WHERE cod_usu = 
+				""" + codUsu + ");";			
+				
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( queryMusica ) ) {
+			while ( rs.next() ) {
+				Musica m = new Musica( rs.getLong( "cod_mu" ), rs.getString( "titulo" ), rs.getString( "autor" ), leerGeneroMusical( rs.getString( "nom_gen_mus" ) ), 
+						leerIdioma( rs.getString( "nom_id" ) ), leerFecha( rs.getString( "fecha_pub" ) ), rs.getInt( "duracion" ) );
+				completar( m, rs );
+				u.getMapMusica().put( m.getCodIdent() , m );
+			}
+		}
+		
+		
+	}
+	
 
 }
