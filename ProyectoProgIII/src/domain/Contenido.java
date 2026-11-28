@@ -33,7 +33,7 @@ public class Contenido {
 		setIdioma(idioma);
 		setFechaPub(fechaPub);
 		setDuracion(duracion);
-		fechaAnya = LocalDate.now();
+		this.fechaAnya = LocalDate.now();
 	}	
 	
 	
@@ -47,6 +47,7 @@ public class Contenido {
 	public void setCodIdent(long codIdent) {
 		this.codIdent = codIdent;
 	}
+	
 	public ImageIcon getImgIcon() {
 		return imgIcon;
 	}

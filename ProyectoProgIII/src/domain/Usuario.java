@@ -1,15 +1,22 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.swing.ImageIcon;
 
 public class Usuario {
+	private int codigo;	// Código identificativo del usuario
 	private String nomUsuario;  //Nombre de usuario del usuario
 	private ImageIcon fotoPerfil;   //Foto de perfil que desee poner el usuario
 	private String descripcion;   //Descripcion de su perfil
-	private ArrayList<Usuario> listaAmigos = new ArrayList<Usuario>();   //Lista de amigos del usuario
-	private ArrayList<Contenido> listaContenido;  //Lista de series, peliculas, libros, musica o audio del usuario
+	private TreeMap<Long, Usuario> mapAmigos;
+	private TreeMap<Long, Libro> mapLibros;
+	private TreeMap<Long, Audio> mapAudios;
+	private TreeMap<Long, Pelicula> mapPelis;
+	private TreeMap<Long, Serie> mapSeries;
+	private TreeMap<Long, Musica> mapMusica;
+	private ArrayList<Contenido> listaFavoritos;
 	
 	
 	//Constructores
@@ -17,18 +24,26 @@ public class Usuario {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Usuario(String nomUsuario, ImageIcon fotoPerfil, String descripcion, ArrayList<Usuario> listaAmigos,
-			ArrayList<Contenido> listaContenido) {
+	public Usuario(int codigo, String nomUsuario, ImageIcon fotoPerfil, String descripcion) {
 		super();
+		this.codigo = codigo;
 		this.nomUsuario = nomUsuario;
 		this.fotoPerfil = fotoPerfil;
 		this.descripcion = descripcion;
-		this.listaAmigos = listaAmigos;
-		this.listaContenido = listaContenido;
+		this.mapAmigos = new TreeMap<Long, Usuario>();
+		this.mapLibros = new TreeMap<Long, Libro>();
+		this.mapAudios = new TreeMap<Long, Audio>();
+		this.mapPelis = new TreeMap<Long, Pelicula>();
+		this.mapSeries = new TreeMap<Long, Serie>();
+		this.mapMusica = new TreeMap<Long, Musica>();
+		listaFavoritos = new ArrayList<Contenido>();
 	}
 	
 	
 	//Getters y setters
+	public int getCodigo() {
+		return codigo;
+	}
 	public String getNomUsuario() {
 		return nomUsuario;
 	}
@@ -47,25 +62,37 @@ public class Usuario {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public ArrayList<Usuario> getListaAmigos() {
-		return listaAmigos;
+	public TreeMap<Long, Usuario> getMapAmigos() {
+		return mapAmigos;
+	}	
+	
+	public TreeMap<Long, Libro> getMapLibros() {
+		return mapLibros;
 	}
-	public void setListaAmigos(ArrayList<Usuario> listaAmigos) {
-		this.listaAmigos = listaAmigos;
+	public TreeMap<Long, Audio> getMapAudios() {
+		return mapAudios;
 	}
-	public ArrayList<Contenido> getListaContenido() {
-		return listaContenido;
+	public TreeMap<Long, Pelicula> getMapPelis() {
+		return mapPelis;
 	}
-	public void setListaContenido(ArrayList<Contenido> listaContenido) {
-		this.listaContenido = listaContenido;
+	public TreeMap<Long, Serie> getMapSeries() {
+		return mapSeries;
 	}
+	public TreeMap<Long, Musica> getMapMusica() {
+		return mapMusica;
+	}
+	public ArrayList<Contenido> getListaFavoritos() {
+		return listaFavoritos;
+	}
+
 	
 	
 	//To String
 	@Override
 	public String toString() {
-		return "Usuario [nomUsuario=" + nomUsuario + ", fotoPerfil=" + fotoPerfil + ", descripcion=" + descripcion
-				+ ", listaAmigos=" + listaAmigos + ", listaContenido=" + listaContenido + "]";
+		return "Usuario [codigo=" + codigo + ", nomUsuario=" + nomUsuario + ", fotoPerfil=" + fotoPerfil + ", descripcion=" + descripcion
+				+ ", mapAmigos=" + mapAmigos + ", mapLibros=" + mapLibros + ", mapAudios=" + mapAudios + ", mapPelis=" 
+				+ mapPelis + ", mapSeries=" + mapSeries + ", mapMusica=" + mapMusica + ", listaFavoritos=" + listaFavoritos  + "]";
 	}
 	
 
