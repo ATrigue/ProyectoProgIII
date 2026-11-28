@@ -275,6 +275,7 @@ public class GestorBD {
 							
 						Usuario u = new Usuario(codigo, nomUsuario, img, desc);
 						cargarContenidosUsuario( con, u );
+						cargarFavoritosUsuario( con, u );
 						System.out.println( u );	//TODO quitar cuando terminen las pruebas
 						usuarios.put( codigo, u );
 						
@@ -377,6 +378,63 @@ public class GestorBD {
 						leerIdioma( rs.getString( "nom_id" ) ), leerFecha( rs.getString( "fecha_pub" ) ), rs.getInt( "duracion" ) );
 				completar( m, rs );
 				u.getMapMusica().put( m.getCodIdent() , m );
+			}
+		}
+		
+		
+	}
+	
+	
+	public static void cargarFavoritosUsuario( Connection con, Usuario u ) throws SQLException {
+		
+		int codUsu = u.getCodigo();
+		
+		// Libros
+		String queryLibros = "SELECT cod_li FROM tiene_libro WHERE cod_usu =" + codUsu + " AND favorito = 'true'";
+					
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( queryLibros ) ) {
+			while ( rs.next() ) {
+				u.getListaFavoritos().add( u.getMapLibros().get( rs.getLong( "cod_li") ) );
+			}
+		}
+		
+		
+		// Audios
+		String queryAudios = "SELECT cod_au FROM tiene_audio WHERE cod_usu =" + codUsu + " AND favorito = 'true'";
+		
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( queryAudios ) ) {
+			while ( rs.next() ) {
+				u.getListaFavoritos().add( u.getMapAudios().get( rs.getLong( "cod_au") ) );
+			}
+		}
+		
+		
+		// Peliculas
+		String queryPelis = "SELECT cod_pe FROM tiene_peli WHERE cod_usu =" + codUsu + " AND favorito = 'true'";
+		
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( queryPelis ) ) {
+			while ( rs.next() ) {
+				u.getListaFavoritos().add( u.getMapPelis().get( rs.getLong( "cod_pe") ) );
+			}
+		}
+		
+		
+		// Series
+		String querySeries = "SELECT cod_se FROM tiene_serie WHERE cod_usu =" + codUsu + " AND favorito = 'true'";
+		
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( querySeries ) ) {
+			while ( rs.next() ) {
+				u.getListaFavoritos().add( u.getMapSeries().get( rs.getLong( "cod_se") ) );
+			}
+		}
+		
+		
+		// Musica
+		String queryMusica = "SELECT cod_mu FROM tiene_musica WHERE cod_usu =" + codUsu + " AND favorito = 'true'";
+		
+		try ( Statement st = con.createStatement(); ResultSet rs = st.executeQuery( queryMusica ) ) {
+			while ( rs.next() ) {
+				u.getListaFavoritos().add( u.getMapMusica().get( rs.getLong( "cod_mu") ) );
 			}
 		}
 		
