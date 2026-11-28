@@ -12,7 +12,7 @@ public class MainProyecto {
 		// Los contenidos se leen de la base de datos (resources/db/berenjenas.db)
 		Catalogo catalogo = GestorBD.cargarCatalogo();
 
-		Ventana v = new Ventana( catalogo );
+		Ventana v = new Ventana( catalogo ); // CREACION DE LA VENTANA
 	}
 
 }
