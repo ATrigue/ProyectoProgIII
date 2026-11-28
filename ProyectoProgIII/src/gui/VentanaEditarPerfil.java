@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.concurrent.Flow;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -64,7 +66,7 @@ public class VentanaEditarPerfil extends JDialog{
 		
 		//----CREO EL PANEL PRINCIPAL---------------------------------------------------------------------------------
 		JPanel panelEditar = new JPanel(new BorderLayout(0, 0));
-		JPanel panelCentro = new JPanel(new BorderLayout(0, 0));
+		JPanel panelCentro = new JPanel(new BorderLayout(0, 30));
 		
 		JPanel panelNorte = new JPanel(new BorderLayout(10, 10));
 		
@@ -75,15 +77,29 @@ public class VentanaEditarPerfil extends JDialog{
 		
 		//----CAMBIO LA IMAGEN
 		imgUsuario = new ImageIcon(perfil.getImgPerfil().getImage());
-		modImg = new JButton(imgUsuario);
-		modImg.setPreferredSize(new Dimension(150, 170));
-		panelNorte.add(modImg, BorderLayout.WEST);
+		JPanel panelImagen = new JPanel(new BorderLayout(0, 0));
+		panelImagen.setPreferredSize(new Dimension(150, 170));
+		panelImagen.setBorder(BorderFactory.createLineBorder(Color.gray));
 		
-		modImg.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );  // MANITO AL PASAR EL RATON POR ENCIMA
+		//Le pongo un borde para que no se pegue a la izquierda
+		panelImagen.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 15));
+		panelImagen.add(new JLabel(imgUsuario));
+		
+//		modImg = new JButton(imgUsuario);
+//		modImg.setPreferredSize(new Dimension(150, 170));
+		
+		panelNorte.add(panelImagen, BorderLayout.WEST);
+		
+		panelImagen.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );  // MANITO AL PASAR EL RATON POR ENCIMA
 		
 		
 		//----CAMBIO EL NOMBRE Y LA DESCRIPCION
-		JPanel panelDatos = new JPanel(new GridLayout(2, 2, 10, 10));
+		JPanel panelDatos = new JPanel(new BorderLayout(10,  10));
+		JPanel panelDatoUsuario = new JPanel(new BorderLayout(10,  10));
+		JPanel panelBotones = new JPanel(new BorderLayout(10,  10));
+		
+		//Le pongo un borde para que no se pegue a la derecha
+		panelBotones.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 15));
 		
 		nomUsuario = new JTextField(perfil.getNomUsuario().getText());
 		nomUsuario.setEditable(false);
@@ -97,15 +113,46 @@ public class VentanaEditarPerfil extends JDialog{
 		
 		modNombre = new JButton(new ImageIcon(imgesc));
 		modDesc = new JButton(new ImageIcon(imgesc));
+		modDesc.setPreferredSize(new Dimension(20, 20));
+		modDesc.setPreferredSize(new Dimension(105, 45));
 		
-		panelDatos.add(nomUsuario);
-		panelDatos.add(modNombre);
-		panelDatos.add(descUsuario);
-		panelDatos.add(modDesc);
+		panelDatoUsuario.add(nomUsuario, BorderLayout.NORTH);
+//		panelBotones.add(modNombre, BorderLayout.NORTH);
+		panelDatoUsuario.add(descUsuario, BorderLayout.CENTER);
+		panelBotones.add(modDesc, BorderLayout.CENTER);
+		
+		panelDatos.add(panelDatoUsuario, BorderLayout.CENTER);
+		panelDatos.add(panelBotones, BorderLayout.EAST);
 		
 		
 		//----CAMBIO LOS CONTENIDOS FAVORITOS
-		JPanel panelSur = new JPanel(new GridLayout(1, 5, 10, 0));
+		JPanel panelSur = new JPanel(new BorderLayout(0,  10));
+		
+		JLabel labelContenido = new JLabel("-Contenido favorito-", SwingUtilities.CENTER);
+		
+		
+		JPanel subpanelContenido = new JPanel(new GridLayout(1, 5, 10, 0));
+		
+		String [] categorias = {
+				"Películas", "Series", "Libros", "Música", "Audio"
+		};
+		
+		for (String c : categorias) {
+			JPanel columna = new JPanel(new BorderLayout(10, 0));
+			
+			columna.add(new JLabel(c, SwingUtilities.CENTER), BorderLayout.NORTH);
+			
+			ImageIcon img = new ImageIcon("resources/images/question-mark-transparent-grey-5.png");
+			Image imgEs = img.getImage().getScaledInstance(170, 200, Image.SCALE_SMOOTH);
+			ImageIcon imgDatoEscalada = new ImageIcon(imgEs);
+			columna.add(new JLabel(imgDatoEscalada), BorderLayout.CENTER);
+			
+			subpanelContenido.add(columna);
+		}
+		
+		
+		panelSur.add(labelContenido, BorderLayout.NORTH);
+		panelSur.add(subpanelContenido, BorderLayout.CENTER);
 		
 		
 		
@@ -150,24 +197,27 @@ public class VentanaEditarPerfil extends JDialog{
 		
 		
 		//----ACTION LISTENERS---------------------------------------------------------------------------------------
-		modNombre.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				nomUsuario.setText("");
-				nomUsuario.setEditable(true);
-				nomUsuario.setBackground(null);
-			}
-		});
+//		modNombre.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				nomUsuario.setText("");
+//				nomUsuario.setEditable(true);
+//				nomUsuario.setBackground(null);
+//			}
+//		});
 		
 		modDesc.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				descUsuario.setEditable(true);
+				nomUsuario.setText("");
+				nomUsuario.setEditable(true);
+				nomUsuario.setBackground(null);
 				
 			}
 		});
 		
-		modImg.addMouseListener(new MouseAdapter() {
+		panelImagen.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				abrirExplorador();
 			}

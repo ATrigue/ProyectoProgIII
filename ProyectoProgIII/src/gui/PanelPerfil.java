@@ -1,17 +1,21 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -29,6 +33,8 @@ public class PanelPerfil {
 	private static ImageIcon imgPerfil;
 	private static JLabel fotoPerfil;
 	
+	private static JButton b;
+	
 
 	static JPanel crearPanelPerfil() {
 		JPanel panelPerfil = new JPanel(new BorderLayout(0, 30));
@@ -43,7 +49,7 @@ public class PanelPerfil {
 		JPanel panelFotoPerfil = new JPanel(new BorderLayout(0, 0));
 		
 		//(me falta meter la imagen y calcular bien las proporciones que quiero que tenga)
-		ImageIcon imgP = new ImageIcon("resources/images/question-mark-transparent-grey-5.png");
+		ImageIcon imgP = new ImageIcon(usuario.getFotoPerfil().getImage());
 		Image imgPerfilEscalada = imgP.getImage().getScaledInstance(150, 170, Image.SCALE_SMOOTH);
 		imgPerfil = new ImageIcon(imgPerfilEscalada);
 		fotoPerfil = new JLabel(imgPerfil);
@@ -55,7 +61,12 @@ public class PanelPerfil {
 		panelFotoPerfil.add(fotoPerfil, BorderLayout.CENTER);
 		panelFotoPerfil.add(editarPerfil, BorderLayout.SOUTH);
 		
+		
+		
 		panelNorte.add(panelFotoPerfil, BorderLayout.WEST);
+		
+		//Le pongo un borde para que no se pegue a la izquierda
+		panelNorte.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 15));
 		
 		
 		/// CREO SUBPANEL NOMBRE Y DESCRIPCION
@@ -91,9 +102,12 @@ public class PanelPerfil {
 		
 		JPanel panelListaAmigos = new JPanel(new BorderLayout());
 		
-		panelListaAmigos.add(new JLabel("-Amigo 1"), BorderLayout.NORTH);
-		panelListaAmigos.add(new JLabel("-Amigo 2"), BorderLayout.CENTER);
-		panelListaAmigos.add(new JLabel("-Amigo 3"), BorderLayout.SOUTH);
+		for (Usuario amigo: usuario.getListaAmigos()) {
+			panelListaAmigos.add(new JLabel(amigo.getNomUsuario()));
+		}
+//		panelListaAmigos.add(new JLabel("-Amigo 1"), BorderLayout.NORTH);
+//		panelListaAmigos.add(new JLabel("-Amigo 2"), BorderLayout.CENTER);
+//		panelListaAmigos.add(new JLabel("-Amigo 3"), BorderLayout.SOUTH);
 		
 		panelAmigos.add(panelCabeceraAmigos, BorderLayout.NORTH);
 		panelAmigos.add(panelListaAmigos, BorderLayout.CENTER);
@@ -141,9 +155,33 @@ public class PanelPerfil {
 		botonAmigo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Codigo para añadir otro usuario a la lista de usuarios
+				JPanel panelBusqueda = new JPanel(new BorderLayout(0, 10));
+				
+				//Boton añadir
+				JPanel panelB = new JPanel(new FlowLayout(FlowLayout.CENTER));
+				
+				b = new JButton("Añadir");
+				panelB.add(b);
+				
+				//Añadir el amigo a la BD
+				
+				//Añadir todo al panel
+				panelBusqueda.add(crearPanelBusqueda(), BorderLayout.NORTH);
+				panelBusqueda.add(panelB, BorderLayout.SOUTH);
+				
+				//Sacarlo por pantalla
+				JOptionPane.showMessageDialog(crearPanelPerfil(), panelBusqueda);
 			}
 		});
+		
+		b.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Este boton añade el usuario seleccionado a la lista de amigos del usuario
+			}
+		});
+		
+	
 		
 		
 		//----ACCION DE EDITAR PERFIL---------------------------------------------------------------------------------
@@ -174,7 +212,28 @@ public class PanelPerfil {
 		return panelPerfil;
 	}
 
+	//PANEL DE BUSQUEDA
+	private static JPanel crearPanelBusqueda() {
 
+		JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+		JLabel etiqueta = new JLabel("Buscar 🔍");
+		JTextField cajaBuscar = new JTextField(20);
+
+		// CADA VEZ QUE SE SUELTA UNA TECLA SE VUELVEN A CARGAR LAS TARJETAS CON EL TEXTO ESCRITO
+		cajaBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+//				cargarTarjetas(cajaBuscar.getText());
+			}
+		});
+
+		panelBusqueda.add(etiqueta);
+		panelBusqueda.add(cajaBuscar);
+
+		return panelBusqueda;
+	};
+	
 	
 	//--GETTERS Y SETTERS
 	public static JButton getEditarPerfil() {
